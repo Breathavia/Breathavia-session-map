@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Breathavia">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.svg">
+<link rel="apple-touch-icon" href="icons/icon-192.svg">
+<title>Breathavia</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #FAFAF8; color: #1A1A1A; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+  .container { text-align: center; padding: 40px 24px; max-width: 440px; }
+  .logo { width: 80px; height: 80px; background: #2D7D7B; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 42px; font-weight: 700; color: #fff; }
+  h1 { font-size: 28px; font-weight: 700; color: #2D7D7B; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+  .subtitle { font-size: 14px; color: #888; margin-bottom: 40px; }
+  .btn { display: block; width: 100%; padding: 18px 24px; margin-bottom: 12px; border: 2px solid #2D7D7B; border-radius: 12px; font-size: 17px; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.15s; text-align: center; }
+  .btn-primary { background: #2D7D7B; color: #fff; }
+  .btn-primary:hover { background: #1D5654; }
+  .btn-secondary { background: #fff; color: #2D7D7B; }
+  .btn-secondary:hover { background: #E8F4F3; }
+  .footer { margin-top: 48px; font-size: 12px; color: #BBB; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="logo">B</div>
+  <h1>Breathavia</h1>
+  <p class="subtitle">Carte de séance / Session Map</p>
+  <a href="fr.html" class="btn btn-primary">Français (FR)</a>
+  <a href="en.html" class="btn btn-secondary">English (EN)</a>
+  <p class="footer">Adnan Mehanovic, B.Sc.Ost<br>hello@breathavia.com</p>
+</div>
+<script>
+  if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
+</script>
+</body>
+</html>
