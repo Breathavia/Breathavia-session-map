@@ -1505,6 +1505,7 @@ function App() {
   const [hwFreqs, setHwFreqs] = useState({});
   const [notes, setNotes] = useState("");
   const [openSections, setOpenSections] = useState({
+    profile: false,
     obs: false,
     edu: false,
     ex: true,
@@ -1520,6 +1521,33 @@ function App() {
     email: "",
     business: ""
   }));
+  const [clientProfile, setClientProfile] = useState({});
+  const loadProfile = clientId => {
+    return loadData("breathavia-profile:" + clientId, {
+      occupation: "",
+      concern: "",
+      concern2: "",
+      intensity: "",
+      medications: "",
+      initialCP: "",
+      nijmegen: "",
+      pillarBreathing: "",
+      pillarMovement: "",
+      pillarAwareness: "",
+      privateNotes: ""
+    });
+  };
+  useEffect(() => {
+    if (selectedClientId) setClientProfile(loadProfile(selectedClientId));
+  }, [selectedClientId]);
+  const updateProfile = (key, val) => {
+    const updated = {
+      ...clientProfile,
+      [key]: val
+    };
+    setClientProfile(updated);
+    saveData("breathavia-profile:" + selectedClientId, updated);
+  };
   const [showSettings, setShowSettings] = useState(false);
   const [methodology, setMethodology] = useState("both");
   const saveSetting = (key, val) => {
@@ -1553,6 +1581,7 @@ function App() {
     setShowSummary(false);
     setViewingSession(null);
     setOpenSections({
+      profile: false,
       obs: false,
       edu: false,
       ex: true,
@@ -2115,7 +2144,284 @@ function App() {
   }, exportMsg), viewingSession && /*#__PURE__*/React.createElement("button", {
     onClick: resetForm,
     style: btnStyle("#2D7D7B", "#fff")
-  }, "Nouvelle séance"))), /*#__PURE__*/React.createElement("div", {
+  }, "Nouvelle séance"))), /*#__PURE__*/React.createElement(Section, {
+    title: "Profil client / Client Profile",
+    badge: clientProfile.concern ? 1 : 0,
+    open: openSections.profile,
+    onToggle: () => toggleSection("profile")
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "10px 20px"
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: 11,
+      fontWeight: 600,
+      color: "#888",
+      display: "block",
+      marginBottom: 3
+    }
+  }, "OCCUPATION"), /*#__PURE__*/React.createElement("input", {
+    value: clientProfile.occupation || "",
+    onChange: e => updateProfile("occupation", e.target.value),
+    style: {
+      width: "100%",
+      padding: "6px 8px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 4,
+      fontSize: 13,
+      outline: "none"
+    }
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: 11,
+      fontWeight: 600,
+      color: "#888",
+      display: "block",
+      marginBottom: 3
+    }
+  }, "INTENSITÉ"), /*#__PURE__*/React.createElement("input", {
+    value: clientProfile.intensity || "",
+    onChange: e => updateProfile("intensity", e.target.value),
+    placeholder: "ex: continus, légers",
+    style: {
+      width: "100%",
+      padding: "6px 8px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 4,
+      fontSize: 13,
+      outline: "none"
+    }
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: 11,
+      fontWeight: 600,
+      color: "#888",
+      display: "block",
+      marginBottom: 3
+    }
+  }, "MOTIF PRINCIPAL"), /*#__PURE__*/React.createElement("input", {
+    value: clientProfile.concern || "",
+    onChange: e => updateProfile("concern", e.target.value),
+    style: {
+      width: "100%",
+      padding: "6px 8px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 4,
+      fontSize: 13,
+      outline: "none"
+    }
+  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: 11,
+      fontWeight: 600,
+      color: "#888",
+      display: "block",
+      marginBottom: 3
+    }
+  }, "MOTIF SECONDAIRE"), /*#__PURE__*/React.createElement("input", {
+    value: clientProfile.concern2 || "",
+    onChange: e => updateProfile("concern2", e.target.value),
+    style: {
+      width: "100%",
+      padding: "6px 8px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 4,
+      fontSize: 13,
+      outline: "none"
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      gridColumn: "1 / -1"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: 11,
+      fontWeight: 600,
+      color: "#888",
+      display: "block",
+      marginBottom: 3
+    }
+  }, "MÉDICAMENTS / SUPPLÉMENTS"), /*#__PURE__*/React.createElement("input", {
+    value: clientProfile.medications || "",
+    onChange: e => updateProfile("medications", e.target.value),
+    style: {
+      width: "100%",
+      padding: "6px 8px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 4,
+      fontSize: 13,
+      outline: "none"
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 14,
+      paddingTop: 12,
+      borderTop: "1px solid #E5E3DF"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: 11,
+      fontWeight: 600,
+      color: "#888",
+      display: "block",
+      marginBottom: 6
+    }
+  }, "SCORES DE BASE"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 12,
+      flexWrap: "wrap"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: 10,
+      color: "#999",
+      display: "block"
+    }
+  }, "CP initiale"), /*#__PURE__*/React.createElement("input", {
+    value: clientProfile.initialCP || "",
+    onChange: e => updateProfile("initialCP", e.target.value),
+    style: {
+      width: 56,
+      padding: "5px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 4,
+      fontSize: 14,
+      fontWeight: 700,
+      textAlign: "center",
+      outline: "none"
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: 10,
+      color: "#999",
+      display: "block"
+    }
+  }, "Nijmegen /64"), /*#__PURE__*/React.createElement("input", {
+    value: clientProfile.nijmegen || "",
+    onChange: e => updateProfile("nijmegen", e.target.value),
+    style: {
+      width: 56,
+      padding: "5px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 4,
+      fontSize: 14,
+      fontWeight: 700,
+      textAlign: "center",
+      outline: "none"
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: 10,
+      color: "#999",
+      display: "block"
+    }
+  }, "Respiration /100"), /*#__PURE__*/React.createElement("input", {
+    value: clientProfile.pillarBreathing || "",
+    onChange: e => updateProfile("pillarBreathing", e.target.value),
+    style: {
+      width: 56,
+      padding: "5px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 4,
+      fontSize: 14,
+      fontWeight: 700,
+      textAlign: "center",
+      outline: "none"
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: 10,
+      color: "#999",
+      display: "block"
+    }
+  }, "Mouvement /100"), /*#__PURE__*/React.createElement("input", {
+    value: clientProfile.pillarMovement || "",
+    onChange: e => updateProfile("pillarMovement", e.target.value),
+    style: {
+      width: 56,
+      padding: "5px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 4,
+      fontSize: 14,
+      fontWeight: 700,
+      textAlign: "center",
+      outline: "none"
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: 10,
+      color: "#999",
+      display: "block"
+    }
+  }, "Conscience /100"), /*#__PURE__*/React.createElement("input", {
+    value: clientProfile.pillarAwareness || "",
+    onChange: e => updateProfile("pillarAwareness", e.target.value),
+    style: {
+      width: 56,
+      padding: "5px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 4,
+      fontSize: 14,
+      fontWeight: 700,
+      textAlign: "center",
+      outline: "none"
+    }
+  })))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 14,
+      paddingTop: 12,
+      borderTop: "1px solid #E5E3DF"
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: 11,
+      fontWeight: 600,
+      color: "#888",
+      display: "block",
+      marginBottom: 3
+    }
+  }, "NOTES PRIVÉES (non exportées)"), /*#__PURE__*/React.createElement("textarea", {
+    value: clientProfile.privateNotes || "",
+    onChange: e => updateProfile("privateNotes", e.target.value),
+    placeholder: "Observations à l'accueil, contexte, tout ce qui est pertinent...",
+    rows: 4,
+    style: {
+      width: "100%",
+      padding: "8px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 4,
+      fontSize: 13,
+      resize: "vertical",
+      outline: "none",
+      fontFamily: "inherit",
+      lineHeight: 1.5,
+      boxSizing: "border-box"
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
     style: {
       marginBottom: 16
     }
@@ -2375,7 +2681,79 @@ function App() {
     badge: getChecked(checkedHw).length,
     open: openSections.hw,
     onToggle: () => toggleSection("hw")
-  }, HOMEWORK.map(g => /*#__PURE__*/React.createElement("div", {
+  }, (() => {
+    const sessionExIds = getChecked(checkedEx);
+    const sessionExItems = sessionExIds.map(id => findItem(id)).filter(Boolean);
+    if (sessionExItems.length > 0) return /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginBottom: 14
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12,
+        fontWeight: 700,
+        color: "#2D7D7B",
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
+        marginBottom: 6
+      }
+    }, "Exercices de cette séance"), sessionExItems.map(item => /*#__PURE__*/React.createElement("div", {
+      key: item.id,
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        padding: "5px 0",
+        flexWrap: "wrap"
+      }
+    }, /*#__PURE__*/React.createElement("label", {
+      style: {
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        cursor: "pointer",
+        minWidth: 300
+      }
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "checkbox",
+      checked: !!checkedHw[item.id],
+      onChange: () => toggle(setCheckedHw)(item.id),
+      style: {
+        width: 16,
+        height: 16
+      }
+    }), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 14
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: "#1A1A1A"
+      }
+    }, item.fr), /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: "#999",
+        fontSize: 12,
+        marginLeft: 4
+      }
+    }, "/ ", item.en))), checkedHw[item.id] && /*#__PURE__*/React.createElement("input", {
+      value: hwFreqs[item.id] || "",
+      onChange: e => setHwFreqs(prev => ({
+        ...prev,
+        [item.id]: e.target.value
+      })),
+      placeholder: "ex: 5 min, 2x/jour",
+      style: {
+        padding: "4px 8px",
+        border: "1px solid #D0CEC9",
+        borderRadius: 4,
+        fontSize: 13,
+        width: 180,
+        outline: "none"
+      }
+    }))));
+    return null;
+  })(), HOMEWORK.map(g => /*#__PURE__*/React.createElement("div", {
     key: g.cat,
     style: {
       marginBottom: 14
