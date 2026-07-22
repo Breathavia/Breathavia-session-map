@@ -564,6 +564,7 @@ const EDUCATION = [{
 const EXERCISES = [{
   cat: "BCI — Fondations",
   minCP: 0,
+  method: "bci",
   items: [{
     id: "bci_6a_recovery",
     fr: "Ex 6a: Récupération respiratoire (MSBH 3-5s)",
@@ -583,6 +584,7 @@ const EXERCISES = [{
 }, {
   cat: "BCI — Intermédiaire",
   minCP: 10,
+  method: "bci",
   items: [{
     id: "bci_1_decongest",
     fr: "Ex 1: Décongestion nasale",
@@ -607,6 +609,7 @@ const EXERCISES = [{
 }, {
   cat: "BCI — Avancé",
   minCP: 15,
+  method: "bci",
   items: [{
     id: "bci_2d_finger_nostril",
     fr: "Ex 2d: Doigt bloquant une narine",
@@ -631,6 +634,7 @@ const EXERCISES = [{
 }, {
   cat: "BCI — Performance",
   minCP: 20,
+  method: "bci",
   items: [{
     id: "bci_5b_steps_walk",
     fr: "Ex 5b: Steps avancé (marche, faim d'air modérée-forte)",
@@ -645,6 +649,7 @@ const EXERCISES = [{
 }, {
   cat: "OA — Respiration fonctionnelle",
   minCP: 10,
+  method: "oa",
   items: [{
     id: "oa_1_warmup_msbh",
     fr: "OA 1: Échauffement MSBH (2,5 min)",
@@ -679,6 +684,7 @@ const EXERCISES = [{
 }, {
   cat: "OA — Intégration mouvement",
   minCP: 15,
+  method: "oa",
   items: [{
     id: "oa_5_bl_walk",
     fr: "OA 5: Breathe Light en marchant",
@@ -703,6 +709,7 @@ const EXERCISES = [{
 }, {
   cat: "OA — Simulation d'altitude (IHHT)",
   minCP: 20,
+  method: "oa",
   items: [{
     id: "oa_3_prep_altitude",
     fr: "OA 3: Préparation simulation d'altitude (5 rép.)",
@@ -722,6 +729,7 @@ const EXERCISES = [{
 }, {
   cat: "OA — Performance",
   minCP: 25,
+  method: "oa",
   items: [{
     id: "oa_12_sprint_holds",
     fr: "OA 12: Sprints en rétention (sports d'équipe)",
@@ -741,6 +749,7 @@ const EXERCISES = [{
 }, {
   cat: "Mesures / Measurements",
   minCP: 0,
+  method: "both",
   items: [{
     id: "meas_cp",
     fr: "Mesure de la Control Pause (CP)",
@@ -1005,6 +1014,14 @@ const HW_DESC = {
     en: "Place visual reminders (stickers, alarms) to regularly check that you are breathing through your nose, especially during work or screen time."
   }
 };
+const IP_BCI = {
+  fr: "Exercices Buteyko utilisés sous certification Buteyko Clinic International (BCI).",
+  en: "Buteyko exercises used under Buteyko Clinic International (BCI) certification."
+};
+const IP_OA = {
+  fr: "Exercices Oxygen Advantage © Patrick McKeown. Utilisés sous certification OA.",
+  en: "Oxygen Advantage exercises © Patrick McKeown. Used under OA certification."
+};
 
 // ─── STORAGE (localStorage) ──────────────────────────────────────────
 function loadData(key, fallback) {
@@ -1098,9 +1115,23 @@ ${section("Education", "Éducation", eduItems)}
 ${section("Exercises Practiced", "Exercices pratiqués", exItems, false, EX_DESC)}
 ${section("Home Exercises", "Exercices maison", hwItems, true, HW_DESC)}
 ${notesHtml}
-<div style="margin-top:32px;border-top:1px solid #E5E3DF;padding-top:10px;">
-  <p style="font-size:9pt;color:#888;">Breathavia · Adnan Mehanovic, B.Sc.Ost · hello@breathavia.com</p>
-</div>
+const practName = settings.name || "Practitioner";
+  const practTitle = settings.title ? ", " + settings.title : "";
+  const practEmail = settings.email ? " · " + settings.email : "";
+  const practBiz = settings.business ? settings.business + " · " : "";
+
+  const usedBCI = getChecked(checkedEx).some(id => id.startsWith("bci_"));
+  const usedOA = getChecked(checkedEx).some(id => id.startsWith("oa_"));
+  let ipNote = "";
+  if (usedBCI) ipNote += "<p style=\"font-size:8pt;color:#aaa;margin:2px 0;\">" + IP_BCI.en + "</p>";
+  if (usedOA) ipNote += "<p style=\"font-size:8pt;color:#aaa;margin:2px 0;\">" + IP_OA.en + "</p>";
+
+  const sigHtml = '<div style="margin-top:32px;border-top:1px solid #E5E3DF;padding-top:10px;">' +
+    '<p style="font-size:9pt;color:#888;">' + practBiz + practName + practTitle + practEmail + '</p>' +
+    ipNote +
+    '<p style="font-size:7.5pt;color:#ccc;margin-top:6px;">Powered by Breathavia · breathavia.com</p>' +
+    '</div>';
+  const footerHtml = sigHtml
 </body></html>`;
   const blob = new Blob(["\ufeff", html], {
     type: "application/msword"
@@ -1291,7 +1322,8 @@ function CheckGroup({
 // ─── EXERCISE GUIDE COMPONENT ────────────────────────────────────────
 function ExerciseGuide({
   searchTerm,
-  setSearchTerm
+  setSearchTerm,
+  methodology
 }) {
   const [expandedId, setExpandedId] = React.useState(null);
   const lower = (searchTerm || "").toLowerCase();
@@ -1327,6 +1359,8 @@ function ExerciseGuide({
       marginBottom: 20
     }
   }), EXERCISES.map(group => {
+    const methodMatch = group.method === "both" || methodology === "both" || group.method === methodology;
+    if (!methodMatch) return null;
     const filtered = lower ? group.items.filter(i => i.fr.toLowerCase().includes(lower) || i.en.toLowerCase().includes(lower) || EX_DESC[i.id] && (EX_DESC[i.id].fr.toLowerCase().includes(lower) || EX_DESC[i.id].en.toLowerCase().includes(lower))) : group.items;
     if (!filtered.length) return null;
     return /*#__PURE__*/React.createElement("div", {
@@ -1480,6 +1514,22 @@ function App() {
   const [showSummary, setShowSummary] = useState(false);
   const [exportMsg, setExportMsg] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [settings, setSettings] = useState(() => loadData("breathavia-settings", {
+    name: "",
+    title: "",
+    email: "",
+    business: ""
+  }));
+  const [showSettings, setShowSettings] = useState(false);
+  const [methodology, setMethodology] = useState("both");
+  const saveSetting = (key, val) => {
+    const updated = {
+      ...settings,
+      [key]: val
+    };
+    setSettings(updated);
+    saveData("breathavia-settings", updated);
+  };
   const [activeTab, setActiveTab] = useState("session");
   const [guideSearch, setGuideSearch] = useState("");
   useEffect(() => {
@@ -1590,7 +1640,7 @@ function App() {
       });
     }
     if (notes.trim()) s += `\nNOTES\n─────\n${notes.trim()}\n`;
-    s += `\n══════════════════════════════════════\nBreathavia · Adnan Mehanovic, B.Sc.Ost\n`;
+    s += `\n══════════════════════════════════════\n${settings.business || ""}${settings.business ? " · " : ""}${settings.name || "Practitioner"}${settings.title ? ", " + settings.title : ""}\nPowered by Breathavia · breathavia.com\n`;
     return s;
   };
   const saveSession = () => {
@@ -1725,7 +1775,82 @@ function App() {
       background: activeTab === "guide" ? "#2D7D7B" : "#F5F4F2",
       color: activeTab === "guide" ? "#fff" : "#888"
     }
-  }, "Exercices"))), activeTab === "session" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }, "Exercices")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 10
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setShowSettings(!showSettings),
+    style: {
+      width: "100%",
+      padding: "6px 0",
+      fontSize: 12,
+      color: "#888",
+      background: "none",
+      border: "1px solid #E5E3DF",
+      borderRadius: 6,
+      cursor: "pointer"
+    }
+  }, showSettings ? "✕" : "⚙", " Settings")), showSettings && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 8,
+      padding: "10px",
+      background: "#F5F4F2",
+      borderRadius: 8,
+      fontSize: 13
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    value: settings.name,
+    onChange: e => saveSetting("name", e.target.value),
+    placeholder: "Your name",
+    style: {
+      width: "100%",
+      padding: "6px 8px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 4,
+      fontSize: 12,
+      marginBottom: 6,
+      outline: "none"
+    }
+  }), /*#__PURE__*/React.createElement("input", {
+    value: settings.title,
+    onChange: e => saveSetting("title", e.target.value),
+    placeholder: "Title (e.g. B.Sc.Ost)",
+    style: {
+      width: "100%",
+      padding: "6px 8px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 4,
+      fontSize: 12,
+      marginBottom: 6,
+      outline: "none"
+    }
+  }), /*#__PURE__*/React.createElement("input", {
+    value: settings.email,
+    onChange: e => saveSetting("email", e.target.value),
+    placeholder: "Email",
+    style: {
+      width: "100%",
+      padding: "6px 8px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 4,
+      fontSize: 12,
+      marginBottom: 6,
+      outline: "none"
+    }
+  }), /*#__PURE__*/React.createElement("input", {
+    value: settings.business,
+    onChange: e => saveSetting("business", e.target.value),
+    placeholder: "Business name",
+    style: {
+      width: "100%",
+      padding: "6px 8px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 4,
+      fontSize: 12,
+      outline: "none"
+    }
+  }))), activeTab === "session" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     style: {
       padding: "12px 14px",
       borderBottom: "1px solid #E5E3DF"
@@ -1922,7 +2047,8 @@ function App() {
     }
   }, activeTab === "guide" ? /*#__PURE__*/React.createElement(ExerciseGuide, {
     searchTerm: guideSearch,
-    setSearchTerm: setGuideSearch
+    setSearchTerm: setGuideSearch,
+    methodology: methodology
   }) : /*#__PURE__*/React.createElement("div", {
     style: {
       padding: "24px 32px 80px"
@@ -1990,6 +2116,64 @@ function App() {
     onClick: resetForm,
     style: btnStyle("#2D7D7B", "#fff")
   }, "New session"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 16
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: 12,
+      fontWeight: 600,
+      color: "#555",
+      display: "block",
+      marginBottom: 6
+    }
+  }, "METHOD"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 0,
+      borderRadius: 6,
+      overflow: "hidden",
+      border: "1px solid #D0CEC9"
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: () => setMethodology("bci"),
+    style: {
+      flex: 1,
+      padding: "8px 0",
+      fontSize: 13,
+      fontWeight: 600,
+      border: "none",
+      cursor: "pointer",
+      background: methodology === "bci" ? "#2D7D7B" : "#F5F4F2",
+      color: methodology === "bci" ? "#fff" : "#888"
+    }
+  }, "Buteyko"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setMethodology("oa"),
+    style: {
+      flex: 1,
+      padding: "8px 0",
+      fontSize: 13,
+      fontWeight: 600,
+      border: "none",
+      cursor: "pointer",
+      borderLeft: "1px solid #D0CEC9",
+      background: methodology === "oa" ? "#2D7D7B" : "#F5F4F2",
+      color: methodology === "oa" ? "#fff" : "#888"
+    }
+  }, "OA"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setMethodology("both"),
+    style: {
+      flex: 1,
+      padding: "8px 0",
+      fontSize: 13,
+      fontWeight: 600,
+      border: "none",
+      cursor: "pointer",
+      borderLeft: "1px solid #D0CEC9",
+      background: methodology === "both" ? "#2D7D7B" : "#F5F4F2",
+      color: methodology === "both" ? "#fff" : "#888"
+    }
+  }, "Both"))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       gap: 16,
@@ -2149,8 +2333,10 @@ function App() {
       marginBottom: 12
     }
   }, "Enter CP to filter available exercises / Entrez la CP pour filtrer les exercices."), EXERCISES.map(g => {
-    const available = cpNum === null || cpNum >= g.minCP;
+    const methodMatch = g.method === "both" || methodology === "both" || g.method === methodology;
+    const available = methodMatch && (cpNum === null || cpNum >= g.minCP);
     const locked = cpNum !== null && cpNum < g.minCP;
+    if (!methodMatch) return null;
     return /*#__PURE__*/React.createElement("div", {
       key: g.cat,
       style: {
