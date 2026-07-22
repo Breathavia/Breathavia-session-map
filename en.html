@@ -1053,7 +1053,7 @@ function getChecked(obj) {
 }
 
 // ─── EXPORT: WORD ────────────────────────────────────────────────────
-function exportWord(clientName, sessionNum, cpStart, cpEnd, checkedObs, checkedEdu, checkedEx, checkedHw, hwFreqs, notes) {
+function exportWord(clientName, sessionNum, cpStart, cpEnd, checkedObs, checkedEdu, checkedEx, checkedHw, hwFreqs, notes, settings) {
   const zone = cpStart ? getZone(parseInt(cpStart)) : null;
   const zoneEnd = cpEnd ? getZone(parseInt(cpEnd)) : null;
   const date = new Date().toLocaleDateString("fr-CA");
@@ -2866,7 +2866,7 @@ function App() {
       cursor: totalChecked === 0 ? "not-allowed" : "pointer"
     }
   }, "Save"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => exportWord(selectedClient?.name || "", viewingSession ? viewingSession.sessionNum : sessionNum, cpStart, cpEnd, checkedObs, checkedEdu, checkedEx, checkedHw, hwFreqs, notes),
+    onClick: () => exportWord(selectedClient?.name || "", viewingSession ? viewingSession.sessionNum : sessionNum, cpStart, cpEnd, checkedObs, checkedEdu, checkedEx, checkedHw, hwFreqs, notes, settings),
     disabled: totalChecked === 0 && !notes.trim(),
     style: {
       ...btnStyle("#fff", "#2D6BA6", "1.5px solid #2D6BA6"),
