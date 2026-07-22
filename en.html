@@ -1090,6 +1090,16 @@ function exportWord(clientName, sessionNum, cpStart, cpEnd, checkedObs, checkedE
     variation = `<tr><td style="padding:4px 16px 4px 0;color:#888;font-weight:bold;font-size:10.5pt;">Change</td><td style="padding:4px 0;font-size:10.5pt;color:${col};font-weight:bold;">${diff >= 0 ? "+" : ""}${diff}s</td></tr>`;
   }
   const notesHtml = notes.trim() ? `<h2 style="color:#2D7D7B;font-size:13pt;margin:20px 0 8px;border-bottom:1px solid #E5E3DF;padding-bottom:4px;">Notes</h2><p style="font-size:10.5pt;white-space:pre-wrap;margin-left:12px;">${notes.replace(/</g, "&lt;")}</p>` : "";
+  const practName = settings.name || "Practitioner";
+  const practTitle = settings.title ? ", " + settings.title : "";
+  const practEmail = settings.email ? " \u00b7 " + settings.email : "";
+  const practBiz = settings.business ? settings.business + " \u00b7 " : "";
+  const usedBCI = getChecked(checkedEx).some(id => id.startsWith("bci_"));
+  const usedOA = getChecked(checkedEx).some(id => id.startsWith("oa_"));
+  let ipNote = "";
+  if (usedBCI) ipNote += '<p style="font-size:8pt;color:#aaa;margin:2px 0;">' + IP_BCI.en + '</p>';
+  if (usedOA) ipNote += '<p style="font-size:8pt;color:#aaa;margin:2px 0;">' + IP_OA.en + '</p>';
+  const footerHtml = '<div style="margin-top:32px;border-top:1px solid #E5E3DF;padding-top:10px;">' + '<p style="font-size:9pt;color:#888;">' + practBiz + practName + practTitle + practEmail + '</p>' + ipNote + '<p style="font-size:7.5pt;color:#ccc;margin-top:6px;">Powered by Breathavia \u00b7 breathavia.com</p>' + '</div>';
   const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
 <head><meta charset="utf-8">
 <style>
@@ -1115,23 +1125,7 @@ ${section("Education", "Éducation", eduItems)}
 ${section("Exercises Practiced", "Exercices pratiqués", exItems, false, EX_DESC)}
 ${section("Home Exercises", "Exercices maison", hwItems, true, HW_DESC)}
 ${notesHtml}
-const practName = settings.name || "Practitioner";
-  const practTitle = settings.title ? ", " + settings.title : "";
-  const practEmail = settings.email ? " · " + settings.email : "";
-  const practBiz = settings.business ? settings.business + " · " : "";
-
-  const usedBCI = getChecked(checkedEx).some(id => id.startsWith("bci_"));
-  const usedOA = getChecked(checkedEx).some(id => id.startsWith("oa_"));
-  let ipNote = "";
-  if (usedBCI) ipNote += "<p style=\"font-size:8pt;color:#aaa;margin:2px 0;\">" + IP_BCI.en + "</p>";
-  if (usedOA) ipNote += "<p style=\"font-size:8pt;color:#aaa;margin:2px 0;\">" + IP_OA.en + "</p>";
-
-  const sigHtml = '<div style="margin-top:32px;border-top:1px solid #E5E3DF;padding-top:10px;">' +
-    '<p style="font-size:9pt;color:#888;">' + practBiz + practName + practTitle + practEmail + '</p>' +
-    ipNote +
-    '<p style="font-size:7.5pt;color:#ccc;margin-top:6px;">Powered by Breathavia · breathavia.com</p>' +
-    '</div>';
-  const footerHtml = sigHtml
+${footerHtml}
 </body></html>`;
   const blob = new Blob(["\ufeff", html], {
     type: "application/msword"
