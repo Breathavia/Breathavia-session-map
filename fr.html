@@ -1022,6 +1022,96 @@ const IP_OA = {
   fr: "Exercices Oxygen Advantage © Patrick McKeown. Utilisés sous certification OA.",
   en: "Oxygen Advantage exercises © Patrick McKeown. Used under OA certification."
 };
+const PROTOCOLS = [{
+  id: "none",
+  fr: "Aucun protocole",
+  en: "No protocol"
+}, {
+  id: "adult_general",
+  fr: "Adulte en bonne santé",
+  en: "Healthy adult",
+  exercises: ["bci_6a_recovery", "bci_6b_recovery_grad", "bci_1_decongest", "bci_2a_breathe_light", "bci_2b_feather", "bci_2c_cupping", "bci_2d_finger_nostril", "bci_2e_cadence", "bci_3_walk_mouth_closed", "bci_4_walk_holds", "bci_5a_steps_beginner", "bci_5b_steps_walk", "meas_cp"]
+}, {
+  id: "children",
+  fr: "Enfants et adolescents",
+  en: "Children and teenagers",
+  exercises: ["bci_6a_recovery", "bci_1_decongest", "bci_3_walk_mouth_closed", "bci_5a_steps_beginner", "bci_5c_steps_run", "meas_cp"]
+}, {
+  id: "asthma",
+  fr: "Asthme",
+  en: "Asthma",
+  exercises: ["bci_6a_recovery", "bci_6b_recovery_grad", "bci_2a_breathe_light", "bci_2b_feather", "bci_5a_steps_beginner", "bci_1_decongest", "bci_3_walk_mouth_closed", "meas_cp"]
+}, {
+  id: "anxiety",
+  fr: "Anxiété et panique",
+  en: "Anxiety and panic",
+  exercises: ["bci_6a_recovery", "bci_2a_breathe_light", "bci_2c_cupping", "bci_5a_steps_beginner", "bci_2e_cadence", "bci_3_walk_mouth_closed", "meas_cp"]
+}, {
+  id: "insomnia",
+  fr: "Insomnie",
+  en: "Insomnia",
+  exercises: ["bci_2a_breathe_light", "bci_2b_feather", "bci_2c_cupping", "bci_6a_recovery", "bci_3_walk_mouth_closed", "meas_cp"]
+}, {
+  id: "sleep_apnea",
+  fr: "Apnée du sommeil et ronflement",
+  en: "Sleep apnea and snoring",
+  exercises: ["bci_1_decongest", "bci_2a_breathe_light", "bci_6a_recovery", "bci_3_walk_mouth_closed", "bci_4_walk_holds", "meas_cp"]
+}, {
+  id: "rhinitis",
+  fr: "Rhinite et congestion nasale",
+  en: "Rhinitis and nasal congestion",
+  exercises: ["bci_1_decongest", "bci_6a_recovery", "bci_6b_recovery_grad", "bci_2a_breathe_light", "bci_3_walk_mouth_closed", "meas_cp"]
+}, {
+  id: "copd",
+  fr: "BPCO / COPD",
+  en: "COPD",
+  exercises: ["bci_6a_recovery", "bci_2a_breathe_light", "bci_2c_cupping", "bci_5a_steps_beginner", "bci_3_walk_mouth_closed", "meas_cp"]
+}, {
+  id: "oa_bolt_under10",
+  fr: "OA: BOLT < 10s (fragile ou senior)",
+  en: "OA: BOLT < 10s (unwell or senior)",
+  exercises: ["oa_1_warmup_msbh", "oa_2a_bl_biochem", "oa_5_bl_walk", "meas_bolt", "meas_cp"]
+}, {
+  id: "oa_bolt_10_15",
+  fr: "OA: BOLT 10-15s",
+  en: "OA: BOLT 10-15s",
+  exercises: ["oa_1_warmup_msbh", "oa_2a_bl_biochem", "oa_2c_bs_paced", "oa_5_bl_walk", "oa_9_childs_pose", "meas_bolt", "meas_cp"]
+}, {
+  id: "oa_bolt_15_20",
+  fr: "OA: BOLT 15-20s",
+  en: "OA: BOLT 15-20s",
+  exercises: ["oa_1_warmup_msbh", "oa_2a_bl_biochem", "oa_2b_bd_biomech", "oa_2c_bs_paced", "oa_3_prep_altitude", "oa_5_bl_walk", "oa_6_bl_jog", "meas_bolt", "meas_cp"]
+}, {
+  id: "oa_bolt_20_plus",
+  fr: "OA: BOLT 20s+ (athlète)",
+  en: "OA: BOLT 20s+ (athlete)",
+  exercises: ["oa_2a_bl_biochem", "oa_2b_bd_biomech", "oa_3_prep_altitude", "oa_4_altitude_sim", "oa_5_bl_walk", "oa_6_bl_jog", "oa_7_bl_squats", "oa_8_bl_pushups", "oa_10_shark_fit", "meas_bolt", "meas_mbt"]
+}, {
+  id: "oa_endurance",
+  fr: "OA: Endurance (course, natation, cyclisme)",
+  en: "OA: Endurance (running, swimming, cycling)",
+  exercises: ["oa_2a_bl_biochem", "oa_4_altitude_sim", "oa_5_bl_walk", "oa_6_bl_jog", "oa_10_shark_fit", "oa_11_bl_advanced", "oa_13_adv_altitude", "oa_14_altitude_mask", "meas_bolt", "meas_mbt"]
+}, {
+  id: "oa_team_combat",
+  fr: "OA: Sports d'équipe et combat (MMA, boxe)",
+  en: "OA: Team sports and combat (MMA, boxing)",
+  exercises: ["oa_1_warmup_msbh", "oa_4_altitude_sim", "oa_10_shark_fit", "oa_12_sprint_holds", "oa_7_bl_squats", "oa_8_bl_pushups", "meas_bolt", "meas_mbt"]
+}, {
+  id: "oa_precomp",
+  fr: "OA: Préparation pré-compétition",
+  en: "OA: Pre-competition preparation",
+  exercises: ["oa_1_warmup_msbh", "oa_2a_bl_biochem", "oa_2c_bs_paced", "oa_4_altitude_sim", "meas_bolt"]
+}, {
+  id: "oa_sleep",
+  fr: "OA: Amélioration du sommeil",
+  en: "OA: Sleep improvement",
+  exercises: ["oa_2a_bl_biochem", "oa_2c_bs_paced", "oa_9_childs_pose", "oa_11_bl_advanced", "meas_bolt", "meas_cp"]
+}, {
+  id: "oa_anxiety",
+  fr: "OA: Anxiété et stress",
+  en: "OA: Anxiety and stress",
+  exercises: ["oa_1_warmup_msbh", "oa_2a_bl_biochem", "oa_2c_bs_paced", "oa_9_childs_pose", "oa_3_prep_altitude", "meas_bolt", "meas_cp"]
+}];
 
 // ─── STORAGE (localStorage) ──────────────────────────────────────────
 function loadData(key, fallback) {
@@ -1263,7 +1353,8 @@ function CheckGroup({
   items,
   checked,
   onChange,
-  cpFilter
+  cpFilter,
+  highlighted
 }) {
   return /*#__PURE__*/React.createElement("div", {
     className: "check-grid",
@@ -1282,7 +1373,11 @@ function CheckGroup({
         gap: 8,
         padding: "5px 0",
         cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.35 : 1
+        opacity: disabled ? 0.35 : 1,
+        background: !disabled && highlighted && highlighted.has(item.id) ? "#E8F8EE" : "transparent",
+        borderRadius: 4,
+        padding: "5px 6px",
+        marginLeft: -6
       }
     }, /*#__PURE__*/React.createElement("input", {
       type: "checkbox",
@@ -1299,7 +1394,12 @@ function CheckGroup({
         fontSize: 14,
         lineHeight: 1.4
       }
-    }, /*#__PURE__*/React.createElement("span", {
+    }, !disabled && highlighted && highlighted.has(item.id) && /*#__PURE__*/React.createElement("span", {
+      style: {
+        color: "#3D8B5F",
+        marginRight: 4
+      }
+    }, "●"), /*#__PURE__*/React.createElement("span", {
       style: {
         color: "#1A1A1A"
       }
@@ -1543,6 +1643,7 @@ function App() {
     saveData("breathavia-profile:" + selectedClientId, updated);
   };
   const [showSettings, setShowSettings] = useState(false);
+  const [protocol, setProtocol] = useState("none");
   const [methodology, setMethodology] = useState("both");
   const saveSetting = (key, val) => {
     const updated = {
@@ -1708,6 +1809,10 @@ function App() {
     setSessionNum(updated.length + 1);
     if (viewingSession?.id === sessionId) resetForm();
   };
+  const activeProtocol = PROTOCOLS.find(function (p) {
+    return p.id === protocol;
+  });
+  const highlightedExercises = activeProtocol && activeProtocol.exercises ? new Set(activeProtocol.exercises) : new Set();
   const totalChecked = getChecked(checkedObs).length + getChecked(checkedEdu).length + getChecked(checkedEx).length + getChecked(checkedHw).length;
   const btnStyle = (bg, color, border) => ({
     padding: "9px 16px",
@@ -2564,7 +2669,41 @@ function App() {
       maxWidth: 340,
       lineHeight: 1.5
     }
-  }, cpNum < 15 && "⚠ Pas de rétentions prolongées / No extended holds. Réduction légère seulement / Light reduced breathing only.", cpNum >= 15 && cpNum < 25 && "Rétentions douces autorisées / Gentle holds allowed. MSBH et Steps disponibles / MSBH and Steps available.", cpNum >= 25 && "Protocoles OA accessibles / OA protocols available. Rétentions en mouvement autorisées / Moving breath holds allowed.")), /*#__PURE__*/React.createElement(Section, {
+  }, cpNum < 15 && "⚠ Pas de rétentions prolongées / No extended holds. Réduction légère seulement / Light reduced breathing only.", cpNum >= 15 && cpNum < 25 && "Rétentions douces autorisées / Gentle holds allowed. MSBH et Steps disponibles / MSBH and Steps available.", cpNum >= 25 && "Protocoles OA accessibles / OA protocols available. Rétentions en mouvement autorisées / Moving breath holds allowed.")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: 16
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      fontSize: 12,
+      fontWeight: 600,
+      color: "#555",
+      display: "block",
+      marginBottom: 6
+    }
+  }, "PROTOCOLE"), /*#__PURE__*/React.createElement("select", {
+    value: protocol,
+    onChange: e => setProtocol(e.target.value),
+    style: {
+      width: "100%",
+      padding: "8px 10px",
+      border: "1px solid #D0CEC9",
+      borderRadius: 6,
+      fontSize: 13,
+      outline: "none",
+      background: "#fff",
+      color: "#1A1A1A"
+    }
+  }, PROTOCOLS.map(p => /*#__PURE__*/React.createElement("option", {
+    key: p.id,
+    value: p.id
+  }, p.fr, " / ", p.en))), protocol !== "none" && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: "#3D8B5F",
+      marginTop: 6
+    }
+  }, "✓ Exercices recommandés surlignés en vert")), /*#__PURE__*/React.createElement(Section, {
     title: "Observation respiratoire / Breathing Observation",
     badge: getChecked(checkedObs).length,
     open: openSections.obs,
@@ -2668,7 +2807,8 @@ function App() {
       items: g.items,
       checked: checkedEx,
       onChange: toggle(setCheckedEx),
-      cpFilter: cpNum
+      cpFilter: cpNum,
+      highlighted: highlightedExercises
     }));
   })), /*#__PURE__*/React.createElement(Section, {
     title: "Exercices maison / Home Exercises",
