@@ -747,6 +747,16 @@ const EXERCISES = [{
     minCP: 25
   }]
 }, {
+  cat: "BCI — Relaxation",
+  minCP: 0,
+  method: "bci",
+  items: [{
+    id: "bci_7_relaxation",
+    fr: "Ex 7: Relaxation avec respiration réduite (audio guidé)",
+    en: "Ex 7: Relaxation with Reduced Breathing (guided audio)",
+    minCP: 0
+  }]
+}, {
   cat: "Mesures / Measurements",
   minCP: 0,
   method: "both",
@@ -955,6 +965,10 @@ const EX_DESC = {
     fr: "Simulation d'altitude avec le SportsMask OA. Marchez 30 secondes avec respiration nasale, puis expirez et retenez 10 pas. Respirez normalement 10 respirations. Augmentez progressivement les rétentions par paliers de 5 pas (10, 15, 20, 25... jusqu'à 50 pas).",
     en: "Altitude simulation with the OA SportsMask. Walk 30 seconds with nasal breathing, then exhale and hold 10 paces. Breathe normally for 10 breaths. Progressively increase holds in increments of 5 paces (10, 15, 20, 25... up to 50 paces)."
   },
+  bci_7_relaxation: {
+    fr: "Audio guidé de relaxation avec respiration réduite. Idéal avant le sommeil ou pour calmer le système nerveux. Le client écoute l'audio en position confortable (assis ou couché) et réduit progressivement son volume respiratoire en suivant les instructions. Durée : 15-20 minutes.",
+    en: "Guided relaxation audio with reduced breathing. Ideal before sleep or to calm the nervous system. The client listens to the audio in a comfortable position (seated or lying) and progressively reduces breathing volume following the instructions. Duration: 15-20 minutes."
+  },
   meas_cp: {
     fr: "Prenez une respiration normale par le nez, expirez normalement, pincez le nez et chronométrez jusqu'au premier besoin distinct de respirer. Le CP mesure la tolérance au CO₂ et sert d'indicateur de progression.",
     en: "Take a normal breath in through the nose, exhale normally, pinch the nose and time until the first distinct desire to breathe. The CP measures CO₂ tolerance and serves as a progress indicator."
@@ -1027,90 +1041,85 @@ const PROTOCOLS = [{
   fr: "Aucun protocole",
   en: "No protocol"
 }, {
-  id: "adult_general",
-  fr: "Adulte en bonne santé",
-  en: "Healthy adult",
-  exercises: ["bci_6a_recovery", "bci_6b_recovery_grad", "bci_1_decongest", "bci_2a_breathe_light", "bci_2b_feather", "bci_2c_cupping", "bci_2d_finger_nostril", "bci_2e_cadence", "bci_3_walk_mouth_closed", "bci_4_walk_holds", "bci_5a_steps_beginner", "bci_5b_steps_walk", "meas_cp"]
-}, {
   id: "children",
-  fr: "Enfants et adolescents",
-  en: "Children and teenagers",
-  exercises: ["bci_6a_recovery", "bci_1_decongest", "bci_3_walk_mouth_closed", "bci_5a_steps_beginner", "bci_5c_steps_run", "meas_cp"]
+  fr: "BCI: Enfants et adolescents",
+  en: "BCI: Children and teenagers",
+  exercises: ["bci_1_decongest", "bci_2a_breathe_light", "bci_2b_feather", "bci_2c_cupping", "bci_2d_finger_nostril", "bci_2e_cadence", "bci_3_walk_mouth_closed", "bci_5a_steps_beginner", "bci_5b_steps_walk", "bci_5c_steps_run", "bci_6a_recovery", "bci_6b_recovery_grad", "meas_cp"]
+}, {
+  id: "adult_general",
+  fr: "BCI: Adulte en bonne santé",
+  en: "BCI: Healthy adult",
+  exercises: ["bci_1_decongest", "bci_2a_breathe_light", "bci_2b_feather", "bci_2c_cupping", "bci_2d_finger_nostril", "bci_2e_cadence", "bci_3_walk_mouth_closed", "bci_4_walk_holds", "bci_5a_steps_beginner", "bci_5b_steps_walk", "bci_5c_steps_run", "bci_6a_recovery", "bci_6b_recovery_grad", "bci_7_relaxation", "meas_cp"]
+}, {
+  id: "severe_elderly",
+  fr: "BCI: Condition sévère, senior ou CP < 10s",
+  en: "BCI: Severe condition, elderly, or CP < 10s",
+  exercises: ["bci_2a_breathe_light", "bci_2b_feather", "bci_2c_cupping", "bci_2d_finger_nostril", "bci_2e_cadence", "bci_3_walk_mouth_closed", "bci_6a_recovery", "bci_6b_recovery_grad", "bci_7_relaxation", "meas_cp"]
 }, {
   id: "asthma",
-  fr: "Asthme",
-  en: "Asthma",
-  exercises: ["bci_6a_recovery", "bci_6b_recovery_grad", "bci_2a_breathe_light", "bci_2b_feather", "bci_5a_steps_beginner", "bci_1_decongest", "bci_3_walk_mouth_closed", "meas_cp"]
+  fr: "BCI: Asthme, rhinite, respiratoire",
+  en: "BCI: Asthma, rhinitis, respiratory",
+  exercises: ["bci_1_decongest", "bci_2a_breathe_light", "bci_2b_feather", "bci_2c_cupping", "bci_2d_finger_nostril", "bci_2e_cadence", "bci_3_walk_mouth_closed", "bci_4_walk_holds", "bci_5a_steps_beginner", "bci_5b_steps_walk", "bci_6a_recovery", "bci_6b_recovery_grad", "meas_cp"]
 }, {
-  id: "anxiety",
-  fr: "Anxiété et panique",
-  en: "Anxiety and panic",
-  exercises: ["bci_6a_recovery", "bci_2a_breathe_light", "bci_2c_cupping", "bci_5a_steps_beginner", "bci_2e_cadence", "bci_3_walk_mouth_closed", "meas_cp"]
+  id: "insomnia_sleep",
+  fr: "BCI: Insomnie, ronflement, SAHOS, apnée",
+  en: "BCI: Insomnia, snoring, UARS, sleep apnea",
+  exercises: ["bci_1_decongest", "bci_2a_breathe_light", "bci_2b_feather", "bci_2c_cupping", "bci_2d_finger_nostril", "bci_2e_cadence", "bci_3_walk_mouth_closed", "bci_6a_recovery", "bci_6b_recovery_grad", "bci_7_relaxation", "meas_cp"]
 }, {
-  id: "insomnia",
-  fr: "Insomnie",
-  en: "Insomnia",
-  exercises: ["bci_2a_breathe_light", "bci_2b_feather", "bci_2c_cupping", "bci_6a_recovery", "bci_3_walk_mouth_closed", "meas_cp"]
+  id: "anxiety_panic",
+  fr: "BCI: Anxiété, panique, hyperventilation",
+  en: "BCI: Anxiety, panic, hyperventilation",
+  exercises: ["bci_2a_breathe_light", "bci_2b_feather", "bci_2c_cupping", "bci_2d_finger_nostril", "bci_2e_cadence", "bci_3_walk_mouth_closed", "bci_5a_steps_beginner", "bci_6a_recovery", "bci_6b_recovery_grad", "bci_7_relaxation", "meas_cp"]
 }, {
-  id: "sleep_apnea",
-  fr: "Apnée du sommeil et ronflement",
-  en: "Sleep apnea and snoring",
-  exercises: ["bci_1_decongest", "bci_2a_breathe_light", "bci_6a_recovery", "bci_3_walk_mouth_closed", "bci_4_walk_holds", "meas_cp"]
+  id: "fatigue_burnout",
+  fr: "BCI: Fatigue, épuisement, burnout",
+  en: "BCI: Fatigue, exhaustion, burnout",
+  exercises: ["bci_2a_breathe_light", "bci_2b_feather", "bci_2c_cupping", "bci_2d_finger_nostril", "bci_2e_cadence", "bci_6a_recovery", "bci_6b_recovery_grad", "bci_7_relaxation", "meas_cp"]
 }, {
-  id: "rhinitis",
-  fr: "Rhinite et congestion nasale",
-  en: "Rhinitis and nasal congestion",
-  exercises: ["bci_1_decongest", "bci_6a_recovery", "bci_6b_recovery_grad", "bci_2a_breathe_light", "bci_3_walk_mouth_closed", "meas_cp"]
+  id: "onco_pregnancy",
+  fr: "BCI: Traitement oncologique ou 1er trimestre grossesse",
+  en: "BCI: Oncological treatment or 1st trimester pregnancy",
+  exercises: ["bci_2a_breathe_light", "bci_2b_feather", "bci_2c_cupping", "bci_2d_finger_nostril", "bci_2e_cadence", "bci_3_walk_mouth_closed", "bci_6a_recovery", "bci_6b_recovery_grad", "bci_7_relaxation", "meas_cp"]
 }, {
-  id: "copd",
-  fr: "BPCO / COPD",
-  en: "COPD",
-  exercises: ["bci_6a_recovery", "bci_2a_breathe_light", "bci_2c_cupping", "bci_5a_steps_beginner", "bci_3_walk_mouth_closed", "meas_cp"]
+  id: "oa_teenagers",
+  fr: "OA: Adolescents",
+  en: "OA: Teenagers",
+  exercises: ["oa_1_warmup_msbh", "oa_3_prep_altitude", "oa_4_altitude_sim", "oa_5_bl_walk", "oa_6_bl_jog", "meas_bolt"]
+}, {
+  id: "oa_functional",
+  fr: "OA: Respiration fonctionnelle",
+  en: "OA: Functional Breathing",
+  exercises: ["oa_1_warmup_msbh", "oa_2a_bl_biochem", "oa_2b_bd_biomech", "oa_2c_bs_paced", "oa_5_bl_walk", "oa_6_bl_jog", "oa_9_childs_pose", "oa_11_bl_advanced", "meas_bolt"]
+}, {
+  id: "oa_ihht",
+  fr: "OA: Simulation d'altitude (IHHT)",
+  en: "OA: Altitude simulation (IHHT)",
+  exercises: ["oa_3_prep_altitude", "oa_4_altitude_sim", "oa_10_shark_fit", "oa_12_sprint_holds", "oa_13_adv_altitude", "oa_14_altitude_mask", "meas_bolt", "meas_mbt"]
 }, {
   id: "oa_bolt_under10",
   fr: "OA: BOLT < 10s (fragile ou senior)",
   en: "OA: BOLT < 10s (unwell or senior)",
-  exercises: ["oa_1_warmup_msbh", "oa_2a_bl_biochem", "oa_5_bl_walk", "meas_bolt", "meas_cp"]
+  exercises: ["oa_1_warmup_msbh", "oa_5_bl_walk", "meas_bolt"]
 }, {
-  id: "oa_bolt_10_15",
-  fr: "OA: BOLT 10-15s",
-  en: "OA: BOLT 10-15s",
-  exercises: ["oa_1_warmup_msbh", "oa_2a_bl_biochem", "oa_2c_bs_paced", "oa_5_bl_walk", "oa_9_childs_pose", "meas_bolt", "meas_cp"]
-}, {
-  id: "oa_bolt_15_20",
-  fr: "OA: BOLT 15-20s",
-  en: "OA: BOLT 15-20s",
-  exercises: ["oa_1_warmup_msbh", "oa_2a_bl_biochem", "oa_2b_bd_biomech", "oa_2c_bs_paced", "oa_3_prep_altitude", "oa_5_bl_walk", "oa_6_bl_jog", "meas_bolt", "meas_cp"]
+  id: "oa_bolt_10_20",
+  fr: "OA: BOLT 10-20s",
+  en: "OA: BOLT 10-20s",
+  exercises: ["oa_1_warmup_msbh", "oa_2a_bl_biochem", "oa_2c_bs_paced", "oa_5_bl_walk", "meas_bolt"]
 }, {
   id: "oa_bolt_20_plus",
   fr: "OA: BOLT 20s+ (athlète)",
   en: "OA: BOLT 20s+ (athlete)",
-  exercises: ["oa_2a_bl_biochem", "oa_2b_bd_biomech", "oa_3_prep_altitude", "oa_4_altitude_sim", "oa_5_bl_walk", "oa_6_bl_jog", "oa_7_bl_squats", "oa_8_bl_pushups", "oa_10_shark_fit", "meas_bolt", "meas_mbt"]
-}, {
-  id: "oa_endurance",
-  fr: "OA: Endurance (course, natation, cyclisme)",
-  en: "OA: Endurance (running, swimming, cycling)",
-  exercises: ["oa_2a_bl_biochem", "oa_4_altitude_sim", "oa_5_bl_walk", "oa_6_bl_jog", "oa_10_shark_fit", "oa_11_bl_advanced", "oa_13_adv_altitude", "oa_14_altitude_mask", "meas_bolt", "meas_mbt"]
-}, {
-  id: "oa_team_combat",
-  fr: "OA: Sports d'équipe et combat (MMA, boxe)",
-  en: "OA: Team sports and combat (MMA, boxing)",
-  exercises: ["oa_1_warmup_msbh", "oa_4_altitude_sim", "oa_10_shark_fit", "oa_12_sprint_holds", "oa_7_bl_squats", "oa_8_bl_pushups", "meas_bolt", "meas_mbt"]
+  exercises: ["oa_2a_bl_biochem", "oa_4_altitude_sim", "oa_5_bl_walk", "oa_6_bl_jog", "oa_10_shark_fit", "meas_bolt", "meas_mbt"]
 }, {
   id: "oa_precomp",
-  fr: "OA: Préparation pré-compétition",
-  en: "OA: Pre-competition preparation",
+  fr: "OA: Pré-compétition",
+  en: "OA: Pre-competition",
   exercises: ["oa_1_warmup_msbh", "oa_2a_bl_biochem", "oa_2c_bs_paced", "oa_4_altitude_sim", "meas_bolt"]
 }, {
   id: "oa_sleep",
-  fr: "OA: Amélioration du sommeil",
-  en: "OA: Sleep improvement",
-  exercises: ["oa_2a_bl_biochem", "oa_2c_bs_paced", "oa_9_childs_pose", "oa_11_bl_advanced", "meas_bolt", "meas_cp"]
-}, {
-  id: "oa_anxiety",
-  fr: "OA: Anxiété et stress",
-  en: "OA: Anxiety and stress",
-  exercises: ["oa_1_warmup_msbh", "oa_2a_bl_biochem", "oa_2c_bs_paced", "oa_9_childs_pose", "oa_3_prep_altitude", "meas_bolt", "meas_cp"]
+  fr: "OA: Sommeil",
+  en: "OA: Sleep",
+  exercises: ["oa_2a_bl_biochem", "oa_2c_bs_paced", "oa_11_bl_advanced", "meas_bolt"]
 }];
 
 // ─── STORAGE (localStorage) ──────────────────────────────────────────
