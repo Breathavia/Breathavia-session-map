@@ -757,6 +757,96 @@ const EXERCISES = [{
     minCP: 0
   }]
 }, {
+  cat: "Breathavia — Outils propriétaires",
+  minCP: 0,
+  method: "breathavia",
+  items: [{
+    id: "ba_boomerang",
+    fr: "Breathavia Boomerang (respiration alternée, rétention pleins)",
+    en: "Breathavia Boomerang (alternating breath, full-lung holds)",
+    minCP: 0
+  }, {
+    id: "ba_pendule",
+    fr: "Breathavia Pendule (rétentions pleins et vides)",
+    en: "Breathavia Pendulum (full and empty-lung holds)",
+    minCP: 10
+  }, {
+    id: "ba_pendule_vak",
+    fr: "Breathavia Pendule avec ancrage VAK",
+    en: "Breathavia Pendulum with VAK anchoring",
+    minCP: 15
+  }, {
+    id: "ba_vak_stress",
+    fr: "Ancrage VAK anti-stress (5 respirations)",
+    en: "VAK anti-stress anchoring (5 breaths)",
+    minCP: 0
+  }]
+}, {
+  cat: "Breathavia — Fondations",
+  minCP: 0,
+  method: "breathavia",
+  items: [{
+    id: "ba_livre",
+    fr: "Respiration avec livre sur le ventre",
+    en: "Book breathing (diaphragmatic with book on belly)",
+    minCP: 0
+  }, {
+    id: "ba_apnees_minutees",
+    fr: "Apnées minutées (toutes les 15s, 3-5s)",
+    en: "Timed breath holds (every 15s, 3-5s)",
+    minCP: 0
+  }, {
+    id: "ba_test_ecran",
+    fr: "Test écran mobile (symétrie nasale)",
+    en: "Phone screen fog test (nasal symmetry)",
+    minCP: 0
+  }, {
+    id: "ba_humming",
+    fr: "Humming expiratoire (bourdonnement nasal)",
+    en: "Expiratory humming (nasal buzzing)",
+    minCP: 0
+  }]
+}, {
+  cat: "Breathavia — Progression",
+  minCP: 10,
+  method: "breathavia",
+  items: [{
+    id: "ba_apnees_prog",
+    fr: "Apnées progressives (demi CP à 1,5x CP)",
+    en: "Progressive breath holds (half CP to 1.5x CP)",
+    minCP: 10
+  }, {
+    id: "ba_paliers",
+    fr: "Respiration lente progressive par paliers (5 niveaux)",
+    en: "Progressive slow breathing by tiers (5 levels)",
+    minCP: 0
+  }]
+}, {
+  cat: "Breathavia — Mouvement",
+  minCP: 0,
+  method: "breathavia",
+  items: [{
+    id: "ba_torsions",
+    fr: "Torsions du tronc synchronisées",
+    en: "Synchronized trunk rotations",
+    minCP: 0
+  }, {
+    id: "ba_mains",
+    fr: "Mouvements de mains debout (4 variantes)",
+    en: "Standing hand movements (4 variations)",
+    minCP: 0
+  }, {
+    id: "ba_rebond",
+    fr: "Rebond rythmique doux",
+    en: "Gentle rhythmic bouncing",
+    minCP: 0
+  }, {
+    id: "ba_torsions_paliers",
+    fr: "Torsions avec paliers respiratoires",
+    en: "Trunk rotations with breathing tiers",
+    minCP: 10
+  }]
+}, {
   cat: "Mesures / Measurements",
   minCP: 0,
   method: "both",
@@ -969,6 +1059,62 @@ const EX_DESC = {
     fr: "Audio guidé de relaxation avec respiration réduite. Idéal avant le sommeil ou pour calmer le système nerveux. Le client écoute l'audio en position confortable (assis ou couché) et réduit progressivement son volume respiratoire en suivant les instructions. Durée : 15-20 minutes.",
     en: "Guided relaxation audio with reduced breathing. Ideal before sleep or to calm the nervous system. The client listens to the audio in a comfortable position (seated or lying) and progressively reduces breathing volume following the instructions. Duration: 15-20 minutes."
   },
+  ba_boomerang: {
+    fr: "Pouce sur une narine, index sur l'autre. Bouchez la droite, inspirez par la gauche. Bouchez les deux, rétention poumons pleins 2-3 secondes. Ouvrez la droite, expirez, inspirez par la droite. Bouchez les deux, rétention 2-3 secondes. Expirez par la gauche. C'est un cycle. 3 minutes, doucement.",
+    en: "Thumb on one nostril, index on the other. Block the right, inhale through the left. Block both, full-lung hold 2-3 seconds. Open the right, exhale, inhale through the right. Block both, hold 2-3 seconds. Exhale through the left. That's one cycle. 3 minutes, gently."
+  },
+  ba_pendule: {
+    fr: "Évolution du Boomerang. Ajoute une rétention poumons vides après chaque expiration. Inspire narine A, rétention pleins 2-3s, expire narine B, rétention vides 2-3s, inspire narine B, rétention pleins 2-3s, expire narine A, rétention vides 2-3s. Un cycle complet en 8 phases. 5 minutes.",
+    en: "Evolution of the Boomerang. Adds an empty-lung hold after each exhalation. Inhale nostril A, full hold 2-3s, exhale nostril B, empty hold 2-3s, inhale nostril B, full hold 2-3s, exhale nostril A, empty hold 2-3s. One complete cycle in 8 phases. 5 minutes."
+  },
+  ba_pendule_vak: {
+    fr: "Pendule avec ancrage sensoriel. Minute 1 Visuel : visualisez le souffle comme une lumière entre les narines. Minute 2 Auditif : écoutez le son du souffle et le silence des rétentions. Minute 3 Kinesthésique : ressentez la fraîcheur à l'entrée, la chaleur à la sortie, la pression des doigts. Chaque canal ancre l'exercice dans un système représentationnel différent.",
+    en: "Pendulum with sensory anchoring. Minute 1 Visual: visualize breath as light moving between nostrils. Minute 2 Auditory: listen to the sound of breath and the silence of holds. Minute 3 Kinesthetic: feel the coolness at entry, warmth at exit, finger pressure. Each channel anchors the exercise in a different representational system."
+  },
+  ba_vak_stress: {
+    fr: "Après 5 minutes de petites apnées (Ex. 6 Buteyko), prenez 5 respirations lentes nasales. Respirations 1-2 Visuel : visualisez un lieu ou une couleur de sécurité. Respiration 3 Auditif : écoutez le son de votre souffle lent. Respirations 4-5 Kinesthésique : ressentez le poids du corps, les pieds au sol, la chaleur des mains. Crée une association neurologique entre souffle lent et état de calme.",
+    en: "After 5 minutes of small breath holds (Buteyko Ex. 6), take 5 slow nasal breaths. Breaths 1-2 Visual: visualize a safe place or color. Breath 3 Auditory: listen to the sound of your slow breath. Breaths 4-5 Kinesthetic: feel your body weight, feet on the ground, warmth of hands. Creates a neurological association between slow breathing and calm state."
+  },
+  ba_livre: {
+    fr: "Allongé sur le dos, posez un livre sur le ventre au niveau du nombril. Bouche fermée, respiration nasale. À l'inspiration, faites monter le livre. À l'expiration, laissez-le redescendre. Pas de forçage. Si le livre ne bouge pas beaucoup au début, c'est normal. 3 minutes.",
+    en: "Lying on your back, place a book on your belly at navel level. Mouth closed, nasal breathing. On inhalation, make the book rise. On exhalation, let it come back down. No forcing. If the book doesn't move much at first, that's normal. 3 minutes."
+  },
+  ba_apnees_minutees: {
+    fr: "Respiration nasale normale. Toutes les 15 secondes, après une expiration, réalisez une apnée de 3 à 5 secondes poumons vides. Relâchez, reprenez normalement par le nez. Répétez ce cycle pendant 4 minutes.",
+    en: "Normal nasal breathing. Every 15 seconds, after an exhalation, perform a 3-5 second empty-lung hold. Release, resume normal nasal breathing. Repeat this cycle for 4 minutes."
+  },
+  ba_test_ecran: {
+    fr: "Prenez votre téléphone, écran éteint, placez-le sous le nez. Expirez doucement sur l'écran. Observez la buée : symétrique, plus forte ou absente d'un côté? Répétez 2-3 fois. Évaluation rapide de la perméabilité nasale et de la symétrie du flux.",
+    en: "Take your phone, screen off, place it under your nose. Exhale gently onto the screen. Observe the fog: symmetric, stronger or absent on one side? Repeat 2-3 times. Quick assessment of nasal patency and flow symmetry."
+  },
+  ba_humming: {
+    fr: "Inspirez par le nez, puis expirez en produisant un bourdonnement nasal (humming) bouche fermée. Le son doit vibrer dans les sinus et le visage. Augmente la production de monoxyde d'azote nasal (NO) jusqu'à 15 fois. Favorise la vasodilatation et l'ouverture des voies nasales. 2-3 minutes.",
+    en: "Inhale through the nose, then exhale producing a nasal buzzing sound (humming) with mouth closed. The sound should vibrate in the sinuses and face. Increases nasal nitric oxide (NO) production up to 15-fold. Promotes vasodilation and nasal airway opening. 2-3 minutes."
+  },
+  ba_apnees_prog: {
+    fr: "Point de départ : moitié de votre CP. Respiration nasale 15 secondes, puis apnée poumons vides. Progression : demi CP, demi CP +3s, +5s, +8s, CP complet. Ne dépassez pas 1,5 fois votre CP. 15 secondes de récupération entre chaque. Si la reprise est saccadée, revenez au CP complet. Asthme CP<15s : limitez à 2-5s.",
+    en: "Starting point: half your CP. Nasal breathing 15 seconds, then empty-lung hold. Progression: half CP, half CP +3s, +5s, +8s, full CP. Do not exceed 1.5x your CP. 15 seconds recovery between each. If resumption is jerky, return to full CP. Asthma CP<15s: limit to 2-5s."
+  },
+  ba_paliers: {
+    fr: "5 paliers selon votre CP. Palier 1 (CP<15s) : inspire 2s, expire 4s (10 resp/min). Palier 2 (CP 15-20s) : 3s/5s (7,5/min). Palier 3 (CP 20-30s) : 4s/6s (6/min). Palier 4 (CP 30-40s) : 5s/10s (4/min). Palier 5 (CP>40s) : 6s/14s (3/min). Maintenez 2 minutes par palier. Progressez si la faim d'air reste légère.",
+    en: "5 tiers based on your CP. Tier 1 (CP<15s): inhale 2s, exhale 4s (10 br/min). Tier 2 (CP 15-20s): 3s/5s (7.5/min). Tier 3 (CP 20-30s): 4s/6s (6/min). Tier 4 (CP 30-40s): 5s/10s (4/min). Tier 5 (CP>40s): 6s/14s (3/min). Hold 2 minutes per tier. Progress if air hunger remains light."
+  },
+  ba_torsions: {
+    fr: "Debout, pieds largeur d'épaules, bras détendus. À l'inspire nasale : 3 alternances lentes gauche-droite. À l'expire nasale : 3 alternances droite-gauche. Les bras suivent passivement. Le mouvement vient du centre. Pour augmenter : pieds joints ou 5 torsions par souffle. 8-10 minutes.",
+    en: "Standing, feet shoulder-width, arms relaxed. On nasal inhale: 3 slow left-right alternations. On nasal exhale: 3 right-left alternations. Arms follow passively. Movement comes from the center. To increase: feet together or 5 rotations per breath. 8-10 minutes."
+  },
+  ba_mains: {
+    fr: "4 variantes debout avec vidéo. Variante 1 Vertical : mains montent du bassin au menton (inspire), redescendent (expire). Variante 2 Horizontal : bras ouvrent et ferment à la hauteur des épaules. Variante 3 Circulaire : arche vers le haut (inspire), descente devant le visage (expire). Variante 4 Asymétrique : une main vers le ciel, l'autre vers le sol. 2 min par variante.",
+    en: "4 standing variations with video. Variation 1 Vertical: hands rise from pelvis to chin (inhale), descend (exhale). Variation 2 Horizontal: arms open and close at shoulder height. Variation 3 Circular: arch upward (inhale), descend past face (exhale). Variation 4 Asymmetric: one hand skyward, other groundward. 2 min per variation."
+  },
+  ba_rebond: {
+    fr: "Debout, pieds largeur d'épaules. Fléchissez doucement les genoux et relâchez, comme bercer un bébé. Pieds au sol, bras détendus. Respiration nasale naturelle, ne synchronisez pas consciemment. Pour augmenter : talons qui se soulèvent, puis mini sauts doux. Maintenez la nasale sous l'effort. 5 minutes.",
+    en: "Standing, feet shoulder-width. Gently flex knees and release, like rocking a baby. Feet on the ground, arms relaxed. Natural nasal breathing, don't consciously synchronize. To increase: heels lifting, then gentle mini jumps. Maintain nasal breathing under effort. 5 minutes."
+  },
+  ba_torsions_paliers: {
+    fr: "Torsions du tronc combinées aux paliers respiratoires. Le rythme des torsions correspond aux paliers : Palier 1 (2 torsions inspire / 4 expire), Palier 2 (3/5), Palier 3 (4/6), Palier 4 (5/10), Palier 5 (6/14). Une torsion par seconde environ. Maintenez 2 minutes par palier. 8-10 minutes.",
+    en: "Trunk rotations combined with breathing tiers. Rotation rhythm matches the tiers: Tier 1 (2 rotations inhale / 4 exhale), Tier 2 (3/5), Tier 3 (4/6), Tier 4 (5/10), Tier 5 (6/14). About one rotation per second. Hold 2 minutes per tier. 8-10 minutes."
+  },
   meas_cp: {
     fr: "Prenez une respiration normale par le nez, expirez normalement, pincez le nez et chronométrez jusqu'au premier besoin distinct de respirer. Le CP mesure la tolérance au CO₂ et sert d'indicateur de progression.",
     en: "Take a normal breath in through the nose, exhale normally, pinch the nose and time until the first distinct desire to breathe. The CP measures CO₂ tolerance and serves as a progress indicator."
@@ -1031,6 +1177,10 @@ const HW_DESC = {
 const IP_BCI = {
   fr: "Exercices Buteyko utilisés sous certification Buteyko Clinic International (BCI).",
   en: "Buteyko exercises used under Buteyko Clinic International (BCI) certification."
+};
+const IP_BA = {
+  fr: "Breathavia Boomerang, Pendule et protocoles VAK sont des outils originaux de la méthode Breathavia. © Adnan Mehanovic, Breathavia. breathavia.com",
+  en: "Breathavia Boomerang, Pendulum and VAK protocols are original tools of the Breathavia method. © Adnan Mehanovic, Breathavia. breathavia.com"
 };
 const IP_OA = {
   fr: "Exercices Oxygen Advantage © Patrick McKeown. Utilisés sous certification OA.",
@@ -1196,7 +1346,11 @@ function exportWord(clientName, sessionNum, cpStart, cpEnd, checkedObs, checkedE
   const usedBCI = getChecked(checkedEx).some(id => id.startsWith("bci_"));
   const usedOA = getChecked(checkedEx).some(id => id.startsWith("oa_"));
   let ipNote = "";
+  const usedBA = getChecked(checkedEx).some(function (id) {
+    return id.startsWith("ba_");
+  });
   if (usedBCI) ipNote += '<p style="font-size:8pt;color:#aaa;margin:2px 0;">' + IP_BCI.fr + '</p>';
+  if (usedBA) ipNote += '<p style="font-size:8pt;color:#aaa;margin:2px 0;">' + IP_BA.fr + '</p>';
   if (usedOA) ipNote += '<p style="font-size:8pt;color:#aaa;margin:2px 0;">' + IP_OA.fr + '</p>';
   const footerHtml = '<div style="margin-top:32px;border-top:1px solid #E5E3DF;padding-top:10px;">' + '<p style="font-size:9pt;color:#888;">' + practBiz + practName + practTitle + practEmail + '</p>' + ipNote + '<p style="font-size:7.5pt;color:#ccc;margin-top:6px;">Powered by Breathavia \u00b7 breathavia.com</p>' + '</div>';
   const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
@@ -2587,7 +2741,20 @@ function App() {
       background: methodology === "both" ? "#2D7D7B" : "#F5F4F2",
       color: methodology === "both" ? "#fff" : "#888"
     }
-  }, "Les deux"))), /*#__PURE__*/React.createElement("div", {
+  }, "Les deux"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => setMethodology("breathavia"),
+    style: {
+      flex: 1,
+      padding: "8px 0",
+      fontSize: 13,
+      fontWeight: 600,
+      border: "none",
+      cursor: "pointer",
+      borderLeft: "1px solid #D0CEC9",
+      background: methodology === "breathavia" ? "#2D7D7B" : "#F5F4F2",
+      color: methodology === "breathavia" ? "#fff" : "#888"
+    }
+  }, "Breathavia"))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       gap: 16,
