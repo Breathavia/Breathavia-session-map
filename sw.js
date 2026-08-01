@@ -1,4 +1,4 @@
-const CACHE_NAME = 'breathavia-v14';
+const CACHE_NAME = 'breathavia-v15';
 const ASSETS = [
   './',
   './index.html',

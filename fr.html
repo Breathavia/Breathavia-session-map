@@ -1179,17 +1179,23 @@ const IP_BCI = {
   en: "Buteyko exercises used under Buteyko Clinic International (BCI) certification."
 };
 const METHOD_HASHES = {
-  bci: "fd123d7c8ba86d3ee227396d127c7b9fb1bc71f3802b87bbe3f2154756d90d84",
-  oa: "65d6db5814e875328036b311f7441011d09000607dc1420afc44aa1c310bccf3",
-  both: "855614c54c9e3f31302a9937d07c5075a77affeb25f06e055bcc3b7db99bbbc8",
-  breathavia: "5be95a37606e261f98711a8c6ad8fde244a610bf61ffb17aa1a79bcfcd6411a1"
+  bci: "33eb40523fbd8f06",
+  oa: "5d6c3d5a284e414b",
+  both: "17df43bd6f9bffcf",
+  breathavia: "ef950065ad31bbe"
 };
-async function hashPw(pw) {
-  const d = new TextEncoder().encode(pw);
-  const h = await crypto.subtle.digest("SHA-256", d);
-  return Array.from(new Uint8Array(h)).map(function (b) {
-    return b.toString(16).padStart(2, "0");
-  }).join("");
+function hashPw(pw) {
+  var h = 5381;
+  for (var i = 0; i < pw.length; i++) {
+    h = (h << 5) + h + pw.charCodeAt(i) & 0x7fffffff;
+  }
+  var s = h.toString();
+  var h2 = 5381;
+  var r = pw.split("").reverse().join("");
+  for (var j = 0; j < (s + r).length; j++) {
+    h2 = (h2 << 5) + h2 + (s + r).charCodeAt(j) & 0x7fffffff;
+  }
+  return h.toString(16) + h2.toString(16);
 }
 const IP_BA = {
   fr: "Breathavia Boomerang, Pendule et protocoles VAK sont des outils originaux de la méthode Breathavia. © Adnan Mehanovic, Breathavia. breathavia.com",
@@ -1820,7 +1826,7 @@ function App() {
   };
   const [showSettings, setShowSettings] = useState(false);
   const [protocol, setProtocol] = useState("none");
-  const [methodology, setMethodology] = useState("both");
+  const [methodology, setMethodology] = useState("none");
   const [unlockedMethods, setUnlockedMethods] = useState(() => loadData("breathavia-unlocked", []));
   const [pwInput, setPwInput] = useState("");
   const [pwTarget, setPwTarget] = useState(null);
@@ -1831,8 +1837,8 @@ function App() {
     if ((method === "bci" || method === "oa") && unlockedMethods.includes("both")) return true;
     return false;
   };
-  const tryUnlock = async (method, pw) => {
-    const h = await hashPw(pw);
+  const tryUnlock = (method, pw) => {
+    const h = hashPw(pw);
     if (METHOD_HASHES[method] === h) {
       const updated = [...new Set([...unlockedMethods, method])];
       setUnlockedMethods(updated);
@@ -3058,7 +3064,7 @@ function App() {
       marginBottom: 12
     }
   }, "Entrez la CP pour filtrer les exercices disponibles / Enter CP to filter available exercises."), EXERCISES.map(g => {
-    const methodMatch = g.method === "both" || methodology === "both" || g.method === methodology;
+    const methodMatch = methodology !== "none" && (g.method === "both" || methodology === "both" || g.method === methodology);
     const available = methodMatch && (cpNum === null || cpNum >= g.minCP);
     const locked = cpNum !== null && cpNum < g.minCP;
     if (!methodMatch) return null;
