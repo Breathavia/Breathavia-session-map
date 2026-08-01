@@ -1178,6 +1178,19 @@ const IP_BCI = {
   fr: "Exercices Buteyko utilisés sous certification Buteyko Clinic International (BCI).",
   en: "Buteyko exercises used under Buteyko Clinic International (BCI) certification."
 };
+const METHOD_HASHES = {
+  bci: "fd123d7c8ba86d3ee227396d127c7b9fb1bc71f3802b87bbe3f2154756d90d84",
+  oa: "65d6db5814e875328036b311f7441011d09000607dc1420afc44aa1c310bccf3",
+  both: "855614c54c9e3f31302a9937d07c5075a77affeb25f06e055bcc3b7db99bbbc8",
+  breathavia: "5be95a37606e261f98711a8c6ad8fde244a610bf61ffb17aa1a79bcfcd6411a1"
+};
+async function hashPw(pw) {
+  const d = new TextEncoder().encode(pw);
+  const h = await crypto.subtle.digest("SHA-256", d);
+  return Array.from(new Uint8Array(h)).map(function (b) {
+    return b.toString(16).padStart(2, "0");
+  }).join("");
+}
 const IP_BA = {
   fr: "Breathavia Boomerang, Pendule et protocoles VAK sont des outils originaux de la méthode Breathavia. © Adnan Mehanovic, Breathavia. breathavia.com",
   en: "Breathavia Boomerang, Pendulum and VAK protocols are original tools of the Breathavia method. © Adnan Mehanovic, Breathavia. breathavia.com"
@@ -1808,6 +1821,39 @@ function App() {
   const [showSettings, setShowSettings] = useState(false);
   const [protocol, setProtocol] = useState("none");
   const [methodology, setMethodology] = useState("both");
+  const [unlockedMethods, setUnlockedMethods] = useState(() => loadData("breathavia-unlocked", []));
+  const [pwInput, setPwInput] = useState("");
+  const [pwTarget, setPwTarget] = useState(null);
+  const [pwError, setPwError] = useState(false);
+  const isUnlocked = method => {
+    if (unlockedMethods.includes(method)) return true;
+    if (method === "both" && unlockedMethods.includes("bci") && unlockedMethods.includes("oa")) return true;
+    if ((method === "bci" || method === "oa") && unlockedMethods.includes("both")) return true;
+    return false;
+  };
+  const tryUnlock = async (method, pw) => {
+    const h = await hashPw(pw);
+    if (METHOD_HASHES[method] === h) {
+      const updated = [...new Set([...unlockedMethods, method])];
+      setUnlockedMethods(updated);
+      saveData("breathavia-unlocked", updated);
+      setMethodology(method);
+      setPwTarget(null);
+      setPwInput("");
+      setPwError(false);
+    } else {
+      setPwError(true);
+    }
+  };
+  const handleMethodClick = method => {
+    if (isUnlocked(method)) {
+      setMethodology(method);
+    } else {
+      setPwTarget(method);
+      setPwInput("");
+      setPwError(false);
+    }
+  };
   const saveSetting = (key, val) => {
     const updated = {
       ...settings,
@@ -2704,7 +2750,7 @@ function App() {
       border: "1px solid #D0CEC9"
     }
   }, /*#__PURE__*/React.createElement("button", {
-    onClick: () => setMethodology("bci"),
+    onClick: () => handleMethodClick("bci"),
     style: {
       flex: 1,
       padding: "8px 0",
@@ -2715,8 +2761,8 @@ function App() {
       background: methodology === "bci" ? "#2D7D7B" : "#F5F4F2",
       color: methodology === "bci" ? "#fff" : "#888"
     }
-  }, "Buteyko"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => setMethodology("oa"),
+  }, isUnlocked("bci") ? "" : "🔒 ", "Buteyko"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => handleMethodClick("oa"),
     style: {
       flex: 1,
       padding: "8px 0",
@@ -2728,8 +2774,8 @@ function App() {
       background: methodology === "oa" ? "#2D7D7B" : "#F5F4F2",
       color: methodology === "oa" ? "#fff" : "#888"
     }
-  }, "OA"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => setMethodology("both"),
+  }, isUnlocked("oa") ? "" : "🔒 ", "OA"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => handleMethodClick("both"),
     style: {
       flex: 1,
       padding: "8px 0",
@@ -2741,8 +2787,8 @@ function App() {
       background: methodology === "both" ? "#2D7D7B" : "#F5F4F2",
       color: methodology === "both" ? "#fff" : "#888"
     }
-  }, "Les deux"), /*#__PURE__*/React.createElement("button", {
-    onClick: () => setMethodology("breathavia"),
+  }, isUnlocked("both") ? "" : "🔒 ", "Les deux"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => handleMethodClick("breathavia"),
     style: {
       flex: 1,
       padding: "8px 0",
@@ -2754,7 +2800,71 @@ function App() {
       background: methodology === "breathavia" ? "#2D7D7B" : "#F5F4F2",
       color: methodology === "breathavia" ? "#fff" : "#888"
     }
-  }, "Breathavia"))), /*#__PURE__*/React.createElement("div", {
+  }, isUnlocked("breathavia") ? "" : "🔒 ", "Breathavia")), pwTarget && /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 8,
+      padding: 12,
+      background: "#F5F4F2",
+      borderRadius: 8,
+      border: "1px solid #D0CEC9"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 6
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "password",
+    value: pwInput,
+    onChange: e => {
+      setPwInput(e.target.value);
+      setPwError(false);
+    },
+    onKeyDown: e => e.key === "Enter" && tryUnlock(pwTarget, pwInput),
+    placeholder: "Entrez le code d'accès",
+    autoFocus: true,
+    style: {
+      flex: 1,
+      padding: "7px 10px",
+      border: pwError ? "1.5px solid #C45C4A" : "1px solid #D0CEC9",
+      borderRadius: 5,
+      fontSize: 13,
+      outline: "none"
+    }
+  }), /*#__PURE__*/React.createElement("button", {
+    onClick: () => tryUnlock(pwTarget, pwInput),
+    style: {
+      padding: "7px 14px",
+      background: "#2D7D7B",
+      color: "#fff",
+      border: "none",
+      borderRadius: 5,
+      fontSize: 13,
+      cursor: "pointer",
+      fontWeight: 600
+    }
+  }, "Déverrouiller"), /*#__PURE__*/React.createElement("button", {
+    onClick: () => {
+      setPwTarget(null);
+      setPwInput("");
+      setPwError(false);
+    },
+    style: {
+      padding: "7px 10px",
+      background: "none",
+      border: "1px solid #D0CEC9",
+      borderRadius: 5,
+      fontSize: 13,
+      cursor: "pointer",
+      color: "#888"
+    }
+  }, "Annuler")), pwError && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: "#C45C4A",
+      marginTop: 4
+    }
+  }, "Code incorrect"))), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       gap: 16,
