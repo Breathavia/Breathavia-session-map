@@ -1,12 +1,12 @@
-const CACHE_NAME = 'breathavia-v18';
+const CACHE_NAME = 'breathavia-v19';
 const ASSETS = [
   './',
   './index.html',
   './fr.html',
   './en.html',
   './manifest.json',
-  './icons/icon-192.svg',
-  './icons/icon-512.svg'
+  './icons/icon-192.png',
+  './icons/icon-512.png'
 ];
 
 self.addEventListener('install', e => {
