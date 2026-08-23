@@ -1,4 +1,4 @@
-# Breathavia Session Map
+# Breathavia Pro
 
 Carte de séance respiratoire Buteyko / Oxygen Advantage.
 Fonctionne hors-ligne comme une app installable (PWA).

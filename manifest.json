@@ -1,6 +1,6 @@
 {
-  "name": "Breathavia Session Map",
-  "short_name": "Breathavia",
+  "name": "Breathavia Pro",
+  "short_name": "Breathavia Pro",
   "description": "Carte de séance respiratoire / Respiratory session map",
   "start_url": "./index.html",
   "display": "standalone",
