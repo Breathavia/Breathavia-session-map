@@ -2070,11 +2070,14 @@ function App() {
     className: "app-sidebar" + (sidebarOpen ? " open" : ""),
     style: {
       width: 230,
+      minWidth: 230,
+      maxWidth: 230,
       borderRight: "1px solid #E5E3DF",
       background: "#fff",
       display: "flex",
       flexDirection: "column",
-      flexShrink: 0
+      flexShrink: 0,
+      flexGrow: 0
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -2270,6 +2273,7 @@ function App() {
   }, "+ Nouveau client")), /*#__PURE__*/React.createElement("div", {
     style: {
       flex: 1,
+      minWidth: 0,
       overflowY: "auto",
       padding: "8px 0"
     }
@@ -2398,6 +2402,7 @@ function App() {
     className: "app-main",
     style: {
       flex: 1,
+      minWidth: 0,
       overflowY: "auto"
     }
   }, activeTab === "guide" ? /*#__PURE__*/React.createElement(ExerciseGuide, {
