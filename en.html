@@ -34650,39 +34650,37 @@ ${section("Home Exercises", "Exercices maison", hwItems, true, HW_DESC)}
 ${notesHtml}
 ${footerHtml}
 </body></html>`;
-  const blob = new Blob(["\ufeff", html], { type: "application/msword" });
-  const fileName = `Breathavia_${clientName.replace(/\s+/g, "_")}_S${sessionNum}_${date}.doc`;
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  if (isIOS && navigator.share) {
-    (async function() { const docxDoc = new docx.Document({
+  (async function() {
+    const docxDoc = new docx.Document({
       sections: [{
         children: (function() {
-          var children = [];
-          children.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "BREATHAVIA PRO", bold: true, size: 36, color: "2D7D7B" })]}));
-          children.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "Session Map", size: 20, color: "888888" })]}));
-          children.push(new docx.Paragraph({ text: "" }));
-          children.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "Client: ", bold: true, color: "888888" }), new docx.TextRun({ text: clientName })]}));
-          children.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "Date: ", bold: true, color: "888888" }), new docx.TextRun({ text: date })]}));
-          children.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "Session #: ", bold: true, color: "888888" }), new docx.TextRun({ text: String(sessionNum) })]}));
-          children.push(new docx.Paragraph({ text: "" }));
+          var ch = [];
+          var biz = settings.business || "Breathavia Pro";
+          ch.push(new docx.Paragraph({ children: [new docx.TextRun({ text: biz, bold: true, size: 36, color: "2D7D7B" })]}));
+          ch.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "Session Report", size: 20, color: "888888" })]}));
+          ch.push(new docx.Paragraph({ text: "" }));
+          ch.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "Client: ", bold: true, color: "888888" }), new docx.TextRun({ text: clientName })]}));
+          ch.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "Date: ", bold: true, color: "888888" }), new docx.TextRun({ text: date })]}));
+          ch.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "Session #: ", bold: true, color: "888888" }), new docx.TextRun({ text: String(sessionNum) })]}));
+          ch.push(new docx.Paragraph({ text: "" }));
           var zn = cpStart ? CP_ZONES.find(function(z){return parseInt(cpStart)>=z.min&&parseInt(cpStart)<=z.max}) : null;
           var znE = cpEnd ? CP_ZONES.find(function(z){return parseInt(cpEnd)>=z.min&&parseInt(cpEnd)<=z.max}) : null;
-          children.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "Start CP: ", bold: true, color: "888888" }), new docx.TextRun({ text: (cpStart||"-") + "s" + (zn ? " (" + zn.labelEn + " / " + zn.label + ")" : "") })]}));
-          children.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "End CP: ", bold: true, color: "888888" }), new docx.TextRun({ text: (cpEnd||"-") + "s" + (znE ? " (" + znE.labelEn + " / " + znE.label + ")" : "") })]}));
-          if(cpStart&&cpEnd){var df=parseInt(cpEnd)-parseInt(cpStart);children.push(new docx.Paragraph({children:[new docx.TextRun({text:"Change: ",bold:true,color:"888888"}),new docx.TextRun({text:(df>=0?"+":"")+df+"s"})]}));}
-          children.push(new docx.Paragraph({ text: "" }));
+          ch.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "Start CP: ", bold: true, color: "888888" }), new docx.TextRun({ text: (cpStart||"-") + "s" + (zn ? " (" + zn.labelEn + " / " + zn.label + ")" : "") })]}));
+          ch.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "End CP: ", bold: true, color: "888888" }), new docx.TextRun({ text: (cpEnd||"-") + "s" + (znE ? " (" + znE.labelEn + " / " + znE.label + ")" : "") })]}));
+          if(cpStart&&cpEnd){var df=parseInt(cpEnd)-parseInt(cpStart);ch.push(new docx.Paragraph({children:[new docx.TextRun({text:"Change: ",bold:true,color:"888888"}),new docx.TextRun({text:(df>=0?"+":"")+df+"s"})]}));}
+          ch.push(new docx.Paragraph({ text: "" }));
           function addSec(title, ids, dMap) {
             var items = ids.map(function(id){return findItem(id)}).filter(Boolean);
             if(!items.length) return;
-            children.push(new docx.Paragraph({ children: [new docx.TextRun({ text: title, bold: true, size: 24, color: "2D7D7B" })], spacing: { before: 200 }}));
+            ch.push(new docx.Paragraph({ children: [new docx.TextRun({ text: title, bold: true, size: 24, color: "2D7D7B" })], spacing: { before: 200 }}));
             items.forEach(function(item) {
-              var runs = [new docx.TextRun({ text: "\u2022 " + item.en, bold: true }), new docx.TextRun({ text: " / " + item.fr, color: "888888" })];
+              var runs = [new docx.TextRun({ text: "  \u2022 " + item.en, bold: true }), new docx.TextRun({ text: " / " + item.fr, color: "888888" })];
               var freq = hwFreqs && hwFreqs[item.id];
               if(freq) runs.push(new docx.TextRun({ text: " \u2014 " + freq, italics: true }));
-              children.push(new docx.Paragraph({ children: runs, indent: { left: 360 }}));
+              ch.push(new docx.Paragraph({ children: runs }));
               if(dMap && dMap[item.id]) {
-                children.push(new docx.Paragraph({ children: [new docx.TextRun({ text: dMap[item.id].en, size: 18 })], indent: { left: 720 }}));
-                children.push(new docx.Paragraph({ children: [new docx.TextRun({ text: dMap[item.id].fr, size: 18, color: "888888", italics: true })], indent: { left: 720 }}));
+                ch.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "    " + dMap[item.id].en, size: 18 })]}));
+                ch.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "    " + dMap[item.id].fr, size: 18, color: "888888", italics: true })]}));
               }
             });
           }
@@ -34691,35 +34689,30 @@ ${footerHtml}
           addSec("Exercises Practiced", getChecked(checkedEx), EX_DESC);
           addSec("Home Exercises", getChecked(checkedHw), HW_DESC);
           if(notes&&notes.trim()){
-            children.push(new docx.Paragraph({children:[new docx.TextRun({text:"Notes",bold:true,size:24,color:"2D7D7B"})],spacing:{before:200}}));
-            children.push(new docx.Paragraph({text:notes.trim()}));
+            ch.push(new docx.Paragraph({children:[new docx.TextRun({text:"Notes",bold:true,size:24,color:"2D7D7B"})],spacing:{before:200}}));
+            ch.push(new docx.Paragraph({text:notes.trim()}));
           }
-          children.push(new docx.Paragraph({ text: "", spacing: { before: 400 }, border: { bottom: { style: docx.BorderStyle.SINGLE, size: 1, color: "E5E3DF" }}}));
-          var pName = settings.name||"Practitioner";
-          var pTitle = settings.title ? ", "+settings.title : "";
-          var pEmail = settings.email ? " - "+settings.email : "";
-          var pBiz = settings.business ? settings.business+" - " : "";
-          children.push(new docx.Paragraph({children:[new docx.TextRun({text:pBiz+pName+pTitle+pEmail,size:18,color:"888888"})]}));
-          children.push(new docx.Paragraph({children:[new docx.TextRun({text:"Powered by Breathavia - breathavia.com",size:14,color:"CCCCCC"})]}));
-          return children;
+          ch.push(new docx.Paragraph({ text: "", spacing: { before: 400 }}));
+          var pN=settings.name||"Practitioner",pT=settings.title?", "+settings.title:"",pE=settings.email?" - "+settings.email:"",pB=settings.business?settings.business+" - ":"";
+          ch.push(new docx.Paragraph({children:[new docx.TextRun({text:pB+pN+pT+pE,size:18,color:"888888"})]}));
+          ch.push(new docx.Paragraph({children:[new docx.TextRun({text:"Powered by Breathavia - breathavia.com",size:14,color:"CCCCCC"})]}));
+          return ch;
         })()
       }]
     });
-    const docxBlob = await docx.Packer.toBlob(docxDoc);
-    const file = new File([docxBlob], fileName.replace(".doc", ".docx"), { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
-    await navigator.share({ files: [file], title: "Breathavia Pro" }).catch(() => {}); })();
-  } else if (isIOS) {
-    const reader = new FileReader();
-    reader.onloadend = function() { const w = window.open("about:blank"); if(w) { w.document.write(html); w.document.close(); } };
-    reader.readAsText(blob);
-  } else {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `Breathavia_${clientName.replace(/\s+/g, "_")}_S${sessionNum}_${date}.doc`;
-    a.click();
-    URL.revokeObjectURL(url);
-  }
+    var docxBlob = await docx.Packer.toBlob(docxDoc);
+    if (navigator.share && /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) {
+      var file = new File([docxBlob], fileName, { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+      navigator.share({ files: [file], title: fileName }).catch(function(){});
+    } else {
+      var url = URL.createObjectURL(docxBlob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = fileName;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  })();
 }
 
 // ─── EXPORT: EXCEL ───────────────────────────────────────────────────
