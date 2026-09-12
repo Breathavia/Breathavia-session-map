@@ -1331,6 +1331,68 @@ function getChecked(obj) {
 }
 
 // ─── EXPORT: WORD ────────────────────────────────────────────────────
+
+function generateRTF(clientName, sessionNum, cpStart, cpEnd, checkedObs, checkedEdu, checkedEx, checkedHw, hwFreqs, notes, settings, date) {
+  var practName = settings.name || "Practitioner";
+  var practTitle = settings.title ? ", " + settings.title : "";
+  var practEmail = settings.email ? " - " + settings.email : "";
+  var practBiz = settings.business ? settings.business + " - " : "";
+  
+  function esc(s) { return (s||"").replace(/\\/g,"\\\\").replace(/\{/g,"\\{").replace(/\}/g,"\\}"); }
+  
+  var r = "{\\rtf1\\ansi\\deff0\n";
+  r += "{\\fonttbl{\\f0 Calibri;}{\\f1 Courier New;}}\n";
+  r += "{\\colortbl;\\red45\\green125\\blue123;\\red136\\green136\\blue136;\\red26\\green26\\blue26;}\n";
+  r += "\\f0\\fs22\\cf3\n";
+  r += "{\\cf1\\b\\fs36 BREATHAVIA PRO}\\par\n";
+  r += "{\\cf2\\fs18 Session Map}\\par\\par\n";
+  r += "{\\cf2\\b Client:} " + esc(clientName) + "\\par\n";
+  r += "{\\cf2\\b Date:} " + esc(date) + "\\par\n";
+  r += "{\\cf2\\b Session #:} " + sessionNum + "\\par\\par\n";
+  
+  var zone = cpStart ? CP_ZONES.find(function(z){return parseInt(cpStart)>=z.min && parseInt(cpStart)<=z.max}) : null;
+  var zoneEnd = cpEnd ? CP_ZONES.find(function(z){return parseInt(cpEnd)>=z.min && parseInt(cpEnd)<=z.max}) : null;
+  
+  r += "{\\cf2\\b Start CP:} " + (cpStart||"-") + "s" + (zone ? " (" + zone.labelEn + " / " + zone.label + ")" : "") + "\\par\n";
+  r += "{\\cf2\\b End CP:} " + (cpEnd||"-") + "s" + (zoneEnd ? " (" + zoneEnd.labelEn + " / " + zoneEnd.label + ")" : "") + "\\par\n";
+  if (cpStart && cpEnd) { var d = parseInt(cpEnd)-parseInt(cpStart); r += "{\\cf2\\b Change:} " + (d>=0?"+":"") + d + "s\\par\n"; }
+  r += "\\par\n";
+  
+  function addSection(title, ids, descMap) {
+    var items = ids.map(function(id){return findItem(id)}).filter(Boolean);
+    if (!items.length) return;
+    r += "{\\cf1\\b\\fs24 " + esc(title) + "}\\par\n";
+    r += "\\pard\\li360\n";
+    items.forEach(function(item) {
+      r += "{\\b " + esc(item.en) + "} / {\\cf2 " + esc(item.fr) + "}";
+      var freq = hwFreqs && hwFreqs[item.id];
+      if (freq) r += " - {\\i " + esc(freq) + "}";
+      r += "\\par\n";
+      if (descMap && descMap[item.id]) {
+        r += "{\\fs18 " + esc(descMap[item.id].en) + "}\\par\n";
+        r += "{\\fs18\\cf2\\i " + esc(descMap[item.id].fr) + "}\\par\n";
+      }
+    });
+    r += "\\pard\\par\n";
+  }
+  
+  addSection("Observations", getChecked(checkedObs));
+  addSection("Education", getChecked(checkedEdu));
+  addSection("Exercises Practiced / Exercices pratiques", getChecked(checkedEx), EX_DESC);
+  addSection("Home Exercises / Exercices maison", getChecked(checkedHw), HW_DESC);
+  
+  if (notes && notes.trim()) {
+    r += "{\\cf1\\b\\fs24 Notes}\\par\n";
+    r += esc(notes.trim()) + "\\par\\par\n";
+  }
+  
+  r += "\\pard\\brdrb\\brdrs\\brdrw10\\brsp40\\par\n";
+  r += "{\\fs18\\cf2 " + esc(practBiz + practName + practTitle + practEmail) + "}\\par\n";
+  r += "{\\fs14\\cf2 Powered by Breathavia - breathavia.com}\\par\n";
+  r += "}";
+  return r;
+}
+
 function exportWord(clientName, sessionNum, cpStart, cpEnd, checkedObs, checkedEdu, checkedEx, checkedHw, hwFreqs, notes, settings) {
   const zone = cpStart ? getZone(parseInt(cpStart)) : null;
   const zoneEnd = cpEnd ? getZone(parseInt(cpEnd)) : null;
@@ -1415,7 +1477,7 @@ ${footerHtml}
   const fileName = `Breathavia_${clientName.replace(/\s+/g, "_")}_S${sessionNum}_${date}.doc`;
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   if (isIOS && navigator.share) {
-    const file = new File([blob], fileName, { type: "application/msword" });
+    const rtfContent = generateRTF(clientName, sessionNum, cpStart, cpEnd, checkedObs, checkedEdu, checkedEx, checkedHw, hwFreqs, notes, settings, date); const rtfBlob = new Blob([rtfContent], { type: "application/rtf" }); const file = new File([rtfBlob], fileName.replace(".doc", ".rtf"), { type: "application/rtf" });
     navigator.share({ files: [file], title: "Breathavia Pro" }).catch(() => {});
   } else if (isIOS) {
     const reader = new FileReader();
