@@ -1477,7 +1477,7 @@ ${footerHtml}
   const fileName = `Breathavia_${clientName.replace(/\s+/g, "_")}_S${sessionNum}_${date}.doc`;
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   if (isIOS && navigator.share) {
-    const rtfContent = generateRTF(clientName, sessionNum, cpStart, cpEnd, checkedObs, checkedEdu, checkedEx, checkedHw, hwFreqs, notes, settings, date); const rtfBlob = new Blob([rtfContent], { type: "application/rtf" }); const file = new File([rtfBlob], fileName.replace(".doc", ".rtf"), { type: "application/rtf" });
+    const wordHtml = '<?xml version="1.0" encoding="UTF-8"?>\n<?mso-application progid="Word.Document"?>\n' + html; const docBlob = new Blob([wordHtml], { type: "application/msword" }); const file = new File([docBlob], fileName, { type: "application/msword" });
     navigator.share({ files: [file], title: "Breathavia Pro" }).catch(() => {});
   } else if (isIOS) {
     const reader = new FileReader();
