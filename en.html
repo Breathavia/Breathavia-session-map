@@ -1002,8 +1002,8 @@ const EX_DESC = {
     en: "After a normal exhalation, pinch the nose and run to create moderate-to-strong air hunger. Switch to walking to recover. Heart rate should normalize within 5-10 minutes. Not recommended for persons over 60 or with serious health conditions."
   },
   oa_1_warmup_msbh: {
-    fr: "Assis, prenez une respiration normale par le nez, expirez normalement, pincez le nez et retenez 3-5 secondes. Relâchez et prenez 3-4 respirations normales. Répétez pendant 2,5 minutes. Introduit la faim d'air, exploite le monoxyde d'azote nasal. YouTube : youtube.com/@OxygenAdvantage",
-    en: "Seated, take a normal nasal breath in, exhale normally, pinch the nose and hold 3-5 seconds. Release and take 3-4 normal breaths. Repeat for 2.5 minutes. Introduces air hunger, harnesses nasal nitric oxide. YouTube: youtube.com/@OxygenAdvantage"
+    fr: "Assis, prenez une respiration normale par le nez, expirez normalement, pincez le nez et retenez 3-5 secondes. Relâchez et prenez 3-4 respirations normales. Répétez pendant 2,5 minutes. Introduit la faim d'air, exploite le monoxyde d'azote nasal.",
+    en: "Seated, take a normal nasal breath in, exhale normally, pinch the nose and hold 3-5 seconds. Release and take 3-4 normal breaths. Repeat for 2.5 minutes. Introduces air hunger, harnesses nasal nitric oxide."
   },
   oa_2a_bl_biochem: {
     fr: "Mains sur la poitrine et l'abdomen. Réduisez le volume de chaque respiration pour créer une faim d'air tolérable. Visez un souffle silencieux, invisible et régulier. Le CO₂ augmente doucement, améliorant la vasodilatation et la livraison d'O₂ via l'effet Bohr. 4 minutes. Vidéo : youtube.com/watch?v=CElnA4LVUtU | oxygenadvantage.com",
@@ -1026,8 +1026,8 @@ const EX_DESC = {
     en: "Seated or lying semi-supine. Reduce breathing movements by 20-30% by exerting gentle pressure with hands on chest and abdomen. Maintain constant air hunger. If muscles tense or jerk, pause for 15 seconds then resume. 5 minutes."
   },
   oa_5_bl_walk: {
-    fr: "Transférez le Breathe Light en mouvement. Marchez en maintenant une respiration nasale légère, lente et diaphragmatique. Créez une faim d'air tolérable pendant la marche. Méditation en marchant. L'exercice métabolique génère naturellement plus de CO₂. 5 minutes.",
-    en: "Transfer Breathe Light into movement. Walk while maintaining light, slow and diaphragmatic nasal breathing. Create tolerable air hunger during walking. Walking meditation. Metabolic exercise naturally generates more CO₂. 5 minutes."
+    fr: "Vidéo : youtube.com/watch?v=CdPpV32cM0I | Transférez le Breathe Light en mouvement. Marchez en maintenant une respiration nasale légère, lente et diaphragmatique. Créez une faim d'air tolérable pendant la marche. Méditation en marchant. L'exercice métabolique génère naturellement plus de CO₂. 5 minutes.",
+    en: "Video: youtube.com/watch?v=CdPpV32cM0I | Transfer Breathe Light into movement. Walk while maintaining light, slow and diaphragmatic nasal breathing. Create tolerable air hunger during walking. Walking meditation. Metabolic exercise naturally generates more CO₂. 5 minutes."
   },
   oa_6_bl_jog: {
     fr: "Continuez directement de l'exercice 5 en augmentant le rythme à une marche rapide ou un jogging léger. Maintenez la respiration nasale et une faim d'air tolérable. Augmente la production de CO₂ et la tolérance respiratoire pendant l'effort. 5 minutes.",
@@ -1046,7 +1046,7 @@ const EX_DESC = {
     en: "Preparation for strong holds. Exhale through the nose, pinch the nose, walk 10-15 paces during the hold. Release and breathe normally. Repeat 5 times. Suitable for stressed, asthmatic, or panic-prone individuals (light-to-moderate air hunger)."
   },
   oa_4_altitude_sim: {
-    fr: "Rétention forte après expiration passive pour créer une faim d'air forte. Marchez en rétention, accélérez le pas si la faim d'air devient intense. Visez une baisse de SpO₂ vers 80-87%, simulant un entraînement à 4000-5000m d'altitude. 5 répétitions.",
+    fr: "Rétention forte après expiration passive pour créer une faim d'air forte. Marchez en rétention, accélérez le pas si la faim d'air devient intense. Visez une baisse de SpO₂ vers 80-87%, simulant un entraînement à 4000-5000m d'altitude. 5 répétitions. Vidéo : youtube.com/watch?v=6DafzpUn4C4",
     en: "Strong hold after passive exhalation to create strong air hunger. Walk during the hold, speed up if air hunger becomes intense. Aim for SpO₂ drop to 80-87%, simulating training at 4000-5000m altitude. 5 repetitions."
   },
   oa_10_shark_fit: {
@@ -1126,7 +1126,7 @@ const EX_DESC = {
     en: "Trunk rotations combined with breathing tiers. Rotation rhythm matches the tiers: Tier 1 (2 rotations inhale / 4 exhale), Tier 2 (3/5), Tier 3 (4/6), Tier 4 (5/10), Tier 5 (6/14). About one rotation per second. Hold 2 minutes per tier. 8-10 minutes."
   },
   meas_cp: {
-    fr: "Prenez une respiration normale par le nez, expirez normalement, pincez le nez et chronométrez jusqu'au premier besoin distinct de respirer. Le CP mesure la tolérance au CO₂ et sert d'indicateur de progression.",
+    fr: "Prenez une respiration normale par le nez, expirez normalement, pincez le nez et chronométrez jusqu'au premier besoin distinct de respirer. Le CP mesure la tolérance au CO₂ et sert d'indicateur de progression. Vidéo : youtube.com/watch?v=Scy-_hWLAr0",
     en: "Take a normal breath in through the nose, exhale normally, pinch the nose and time until the first distinct desire to breathe. The CP measures CO₂ tolerance and serves as a progress indicator."
   },
   meas_bolt: {
@@ -1647,7 +1647,7 @@ function ExerciseGuide({
       marginBottom: 20
     }
   }), EXERCISES.map(group => {
-    const methodMatch = methodology !== "none" && (group.method === "both" || methodology === "both" || group.method === methodology);
+    const methodMatch = methodology !== "none" && (group.method === "both" || (methodology === "both" && (group.method === "bci" || group.method === "oa")) || group.method === methodology);
     if (!methodMatch) return null;
     const filtered = lower ? group.items.filter(i => i.fr.toLowerCase().includes(lower) || i.en.toLowerCase().includes(lower) || EX_DESC[i.id] && (EX_DESC[i.id].fr.toLowerCase().includes(lower) || EX_DESC[i.id].en.toLowerCase().includes(lower))) : group.items;
     if (!filtered.length) return null;
@@ -3081,7 +3081,7 @@ function App() {
       marginBottom: 12
     }
   }, "Enter CP to filter available exercises / Entrez la CP pour filtrer les exercices."), EXERCISES.map(g => {
-    const methodMatch = methodology !== "none" && (g.method === "both" || methodology === "both" || g.method === methodology);
+    const methodMatch = methodology !== "none" && (g.method === "both" || (methodology === "both" && (g.method === "bci" || g.method === "oa")) || g.method === methodology);
     const available = methodMatch && (cpNum === null || cpNum >= g.minCP);
     const locked = cpNum !== null && cpNum < g.minCP;
     if (!methodMatch) return null;
