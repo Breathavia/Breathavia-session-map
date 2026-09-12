@@ -1411,15 +1411,19 @@ ${section("Home Exercises", "Exercices maison", hwItems, true, HW_DESC)}
 ${notesHtml}
 ${footerHtml}
 </body></html>`;
-  const blob = new Blob(["\ufeff", html], {
-    type: "application/msword"
-  });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `Breathavia_${clientName.replace(/\s+/g, "_")}_S${sessionNum}_${date}.doc`;
-  a.click();
-  URL.revokeObjectURL(url);
+  const blob = new Blob(["\ufeff", html], { type: "application/msword" });
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  if (isIOS) {
+    const blobUrl = URL.createObjectURL(blob);
+    window.open(blobUrl, "_blank");
+  } else {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `Breathavia_${clientName.replace(/\s+/g, "_")}_S${sessionNum}_${date}.doc`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 }
 
 // ─── EXPORT: EXCEL ───────────────────────────────────────────────────
