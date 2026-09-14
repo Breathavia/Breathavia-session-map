@@ -34650,7 +34650,7 @@ ${section("Home Exercises", "Exercices maison", hwItems, true, HW_DESC)}
 ${notesHtml}
 ${footerHtml}
 </body></html>`;
-  (async function() {
+  (async function() { try {
     const docxDoc = new docx.Document({
       sections: [{
         children: (function() {
@@ -34701,17 +34701,15 @@ ${footerHtml}
       }]
     });
     var docxBlob = await docx.Packer.toBlob(docxDoc);
-    if (navigator.share && /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) {
-      var file = new File([docxBlob], fileName, { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
-      navigator.share({ files: [file], title: fileName }).catch(function(){});
-    } else {
-      var url = URL.createObjectURL(docxBlob);
+    var url = URL.createObjectURL(docxBlob);
       var a = document.createElement("a");
       a.href = url;
       a.download = fileName;
+      document.body.appendChild(a);
       a.click();
-      URL.revokeObjectURL(url);
-    }
+      document.body.removeChild(a);
+      setTimeout(function() { URL.revokeObjectURL(url); }, 5000);
+    } catch(err) { alert("Export error: " + err.message); }
   })();
 }
 
