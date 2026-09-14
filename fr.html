@@ -34651,6 +34651,7 @@ ${notesHtml}
 ${footerHtml}
 </body></html>`;
   (async function() { try {
+    var fileName = ((settings.business||"Breathavia").replace(/\s+/g,"_")) + "_" + clientName.replace(/\s+/g,"_") + "_S" + sessionNum + "_" + date + ".docx";
     const docxDoc = new docx.Document({
       sections: [{
         children: (function() {
