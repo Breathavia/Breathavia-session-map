@@ -34651,7 +34651,7 @@ ${notesHtml}
 ${footerHtml}
 </body></html>`;
   (async function() { try {
-    var fileName = ((settings.business||"Breathavia").replace(/\s+/g,"_")) + "_" + clientName.replace(/\s+/g,"_") + "_S" + sessionNum + "_" + date + ".docx";
+    var fileName = (settings.business||"Breathavia").split(" ").join("_") + "_" + clientName.split(" ").join("_") + "_S" + sessionNum + "_" + date + ".docx";
     const docxDoc = new docx.Document({
       sections: [{
         children: (function() {
@@ -34675,13 +34675,12 @@ ${footerHtml}
             if(!items.length) return;
             ch.push(new docx.Paragraph({ children: [new docx.TextRun({ text: title, bold: true, size: 24, color: "2D7D7B" })], spacing: { before: 200 }}));
             items.forEach(function(item) {
-              var runs = [new docx.TextRun({ text: "  \u2022 " + item.en, bold: true }), new docx.TextRun({ text: " / " + item.fr, color: "888888" })];
+              var runs = [new docx.TextRun({ text: "  \u2022 " + item.fr, bold: true })];
               var freq = hwFreqs && hwFreqs[item.id];
               if(freq) runs.push(new docx.TextRun({ text: " \u2014 " + freq, italics: true }));
               ch.push(new docx.Paragraph({ children: runs }));
               if(dMap && dMap[item.id]) {
-                ch.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "    " + dMap[item.id].en, size: 18 })]}));
-                ch.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "    " + dMap[item.id].fr, size: 18, color: "888888", italics: true })]}));
+                ch.push(new docx.Paragraph({ children: [new docx.TextRun({ text: "    " + dMap[item.id].fr, size: 18, color: "555555" })]}));
               }
             });
           }
@@ -34749,7 +34748,7 @@ function exportExcel(clientName, sessions) {
   }));
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Séances");
-  XLSX.writeFile(wb, `Breathavia_${clientName.replace(/\s+/g, "_")}_Historique.xlsx`);
+  XLSX.writeFile(wb, `Breathavia_${clientName.split(" ").join("_")}_Historique.xlsx`);
 }
 
 // ─── UI COMPONENTS ───────────────────────────────────────────────────
